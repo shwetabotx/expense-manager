@@ -10,7 +10,7 @@ const createExpense = async (req, res) => {
             paymentMethod,
             notes
         } = req.body;
-        
+
         if (
             !title ||
             amount === undefined ||
@@ -61,6 +61,31 @@ const createExpense = async (req, res) => {
     }
 };
 
+const getExpenses = async (req, res) => {
+    try {
+        const expenses = await Expense.find({
+            user: req.user.userId
+        }).sort({
+            date: -1
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Expenses fetched successfully",
+            data: expenses
+        });
+
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch expenses"
+        });
+    }
+};
+
 module.exports = {
-    createExpense
+    createExpense,
+    getExpenses
 };
