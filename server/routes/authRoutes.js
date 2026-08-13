@@ -22,4 +22,3 @@ router.get("/protected", authMiddleware, (req, res) => {
 });
 
 module.exports = router;
-

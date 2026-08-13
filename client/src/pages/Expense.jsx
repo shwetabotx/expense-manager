@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getExpenses } from "../services/expenseService";
+import { Link } from "react-router-dom";
 
 function Expense() {
 
@@ -49,6 +50,11 @@ function Expense() {
         <div className="container">
 
             <h1>Expenses</h1>
+            <Link to="/expenses/add">
+                <button>
+                    Add Expense
+                </button>
+            </Link>
 
             {loading && (
                 <p>Loading expenses...</p>
