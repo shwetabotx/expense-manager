@@ -3,6 +3,7 @@ import Expense from "./pages/Expense";
 import "./App.css";
 import Login from "./pages/Login";
 import AddExpense from "./pages/AddExpense";
+import EditExpense from "./pages/EditExpense";
 
 function App() {
   return (
@@ -23,6 +24,11 @@ function App() {
         <Route
           path="/expenses/add"
           element={<AddExpense />}
+        />
+
+        <Route
+          path="/expenses/edit/:id"
+          element={<EditExpense />}
         />
 
       </Routes>

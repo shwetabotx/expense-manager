@@ -8,6 +8,7 @@ function Expense() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+
     const loadExpenses = async () => {
 
         try {
@@ -82,11 +83,11 @@ function Expense() {
                                     <th>Date</th>
                                     <th>Payment Method</th>
                                     <th>Notes</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-
                                 {expenses.map((expense) => (
 
                                     <tr key={expense._id}>
@@ -115,6 +116,14 @@ function Expense() {
 
                                         <td>
                                             {expense.notes || "-"}
+                                        </td>
+
+                                        <td>
+                                            <Link to={`/expenses/edit/${expense._id}`}>
+                                                <button>
+                                                    Edit
+                                                </button>
+                                            </Link>
                                         </td>
 
                                     </tr>
