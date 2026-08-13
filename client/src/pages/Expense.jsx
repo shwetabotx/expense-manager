@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getExpenses } from "../services/expenseService";
+import { getExpenses, deleteExpense } from "../services/expenseService";
 import { Link } from "react-router-dom";
 
 function Expense() {
@@ -46,6 +46,41 @@ function Expense() {
     useEffect(() => {
         loadExpenses();
     }, []);
+
+    const handleDelete = async (id) => {
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this expense?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const token = localStorage.getItem("token");
+
+            if (!token) {
+                setError("Please login first.");
+                return;
+            }
+
+            await deleteExpense(id, token);
+
+            // Reload expenses after deletion
+            loadExpenses();
+
+        } catch (error) {
+
+            console.error(error);
+
+            setError(
+                error.response?.data?.message ||
+                "Failed to delete expense."
+            );
+        }
+    };
 
     return (
         <div className="container">
@@ -124,6 +159,13 @@ function Expense() {
                                                     Edit
                                                 </button>
                                             </Link>
+                                            <button
+                                                onClick={() => handleDelete(expense._id)}
+                                            >
+                                                Delete
+                                            </button>
+
+
                                         </td>
 
                                     </tr>
@@ -140,6 +182,8 @@ function Expense() {
 
         </div>
     );
+
+    
 }
 
 export default Expense;
