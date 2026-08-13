@@ -4,13 +4,13 @@ const userSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: [true, "Name is required"],
+            required: true,
             trim: true
         },
 
         email: {
             type: String,
-            required: [true, "Email is required"],
+            required: true,
             unique: true,
             lowercase: true,
             trim: true
@@ -18,8 +18,14 @@ const userSchema = new mongoose.Schema(
 
         password: {
             type: String,
-            required: [true, "Password is required"],
-            minlength: [6, "Password must be at least 6 characters"]
+            required: true,
+            minlength: 6
+        },
+
+        monthlyBudget: {
+            type: Number,
+            default: 30000,
+            min: 0
         }
     },
     {

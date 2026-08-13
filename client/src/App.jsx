@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./pages/Login";
 import AddExpense from "./pages/AddExpense";
 import EditExpense from "./pages/EditExpense";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
@@ -29,6 +30,10 @@ function App() {
         <Route
           path="/expenses/edit/:id"
           element={<EditExpense />}
+        />
+        <Route
+          path="/dashboard"
+          element={<Dashboard />}
         />
 
       </Routes>
