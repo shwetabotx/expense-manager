@@ -738,7 +738,149 @@ body {
     color: #d9e2c2 !important;
 }
 
+/* ========================================
+   DASHBOARD CHARTS
+======================================== */
 
+.chart-container {
+    width: 100%;
+    height: 300px;
+    margin-top: 20px;
+}
+
+
+/* Chart glass area */
+
+.chart-container > div {
+    width: 100% !important;
+}
+
+
+/* Empty chart */
+
+.empty-chart {
+    height: 280px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #8d9875;
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.025);
+
+    border: 1px solid rgba(190, 205, 150, 0.06);
+}
+
+.empty-chart svg {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 12px;
+
+    color: #71804d;
+}
+
+
+/* Recharts */
+
+.recharts-wrapper {
+    font-family: inherit;
+}
+
+.recharts-cartesian-axis-tick-value {
+    fill: #8f9a7c;
+    font-size: 12px;
+}
+
+.recharts-cartesian-grid line {
+    stroke: rgba(210, 220, 180, 0.06);
+}
+
+
+/* Tooltip */
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.recharts-default-tooltip {
+    background: rgba(30, 38, 22, 0.92) !important;
+
+    border: 1px solid rgba(190, 205, 150, 0.15) !important;
+
+    border-radius: 14px !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+/* Pie chart hover */
+
+.recharts-sector {
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recharts-sector:hover {
+    opacity: 0.8;
+}
+
+
+/* Chart card */
+
+.chart-card {
+    overflow: hidden;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.075),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border:
+        1px solid rgba(190, 205, 150, 0.10);
+
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(190, 205, 150, 0.18);
+}
+
+
+/* Chart icon */
+
+.chart-icon {
+    background:
+        rgba(126, 143, 78, 0.13);
+
+    border:
+        1px solid rgba(170, 185, 120, 0.10);
+
+    color: #a7b77a;
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
 
 
 /*Mobile*/

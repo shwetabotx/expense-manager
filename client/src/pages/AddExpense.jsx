@@ -30,17 +30,13 @@ function AddExpense() {
     };
 
     const handleSubmit = async (event) => {
-
         event.preventDefault();
-
         setError("");
-
         // Validation
         if (!formData.title.trim()) {
             setError("Title is required.");
             return;
         }
-
         if (!formData.amount || Number(formData.amount) <= 0) {
             setError("Amount must be greater than 0.");
             return;
@@ -129,7 +125,6 @@ function AddExpense() {
                         step="0.01"
                     />
                 </div>
-
 
                 {/* Category */}
 
