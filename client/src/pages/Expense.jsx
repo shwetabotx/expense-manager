@@ -47,9 +47,9 @@ function Expenses() {
     const [deleting, setDeleting] = useState(false);
 
 
-    // =========================
+    // 
     // LOAD EXPENSES
-    // =========================
+    // 
 
     const loadExpenses = async () => {
 
@@ -91,9 +91,9 @@ function Expenses() {
     }, []);
 
 
-    // =========================
+    // 
     // DELETE
-    // =========================
+    // 
 
     const openDeleteDialog = (expense) => {
 
@@ -155,9 +155,9 @@ function Expenses() {
     };
 
 
-    // =========================
+    // 
     // CLEAR FILTERS
-    // =========================
+    // 
 
     const clearFilters = () => {
 
@@ -171,9 +171,9 @@ function Expenses() {
     };
 
 
-    // =========================
+    // 
     // FILTER + SORT
-    // =========================
+    // 
 
     const filteredExpenses = expenses
 
@@ -347,9 +347,9 @@ function Expenses() {
 
         <div className="expenses-page">
 
-            {/* ========================= */}
+            {/*  */}
             {/* HEADER */}
-            {/* ========================= */}
+            {/*  */}
 
             <div className="expenses-header">
 
@@ -400,9 +400,9 @@ function Expenses() {
             </div>
 
 
-            {/* ========================= */}
+            {/*  */}
             {/* ERROR */}
-            {/* ========================= */}
+            {/*  */}
 
             {error && (
 
@@ -425,9 +425,9 @@ function Expenses() {
             )}
 
 
-            {/* ========================= */}
+            {/*  */}
             {/* FILTER CARD */}
-            {/* ========================= */}
+            {/*  */}
 
             <div className="glass-card filters-card">
 
@@ -526,8 +526,8 @@ function Expenses() {
                                 Food
                             </option>
 
-                            <option value="Transport">
-                                Transport
+                            <option value="Travel">
+                                Travel
                             </option>
 
                             <option value="Shopping">
@@ -697,9 +697,9 @@ function Expenses() {
             </div>
 
 
-            {/* ========================= */}
+            {/*  */}
             {/* EXPENSE TABLE */}
-            {/* ========================= */}
+            {/*  */}
 
             <div className="glass-card expenses-table-card">
 
@@ -951,9 +951,9 @@ function Expenses() {
             </div>
 
 
-            {/* ========================= */}
+            {/*  */}
             {/* DELETE DIALOG */}
-            {/* ========================= */}
+            {/*  */}
 
             {deleteDialog && (
 
