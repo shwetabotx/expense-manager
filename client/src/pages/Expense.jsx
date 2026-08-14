@@ -2,154 +2,359 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
+    HomeIcon,
     PlusIcon,
     PencilSquareIcon,
     TrashIcon,
-    ReceiptPercentIcon,
     MagnifyingGlassIcon,
     FunnelIcon,
+    XMarkIcon,
     ExclamationTriangleIcon,
-    XMarkIcon
+    ArrowPathIcon
 } from "@heroicons/react/24/outline";
 
 import {
     getExpenses,
-    deleteExpense as deleteExpenseApi
+    deleteExpense
 } from "../services/expenseService";
 
 import "./Expense.css";
 
-
-function Expense() {
+function Expenses() {
 
     const [expenses, setExpenses] = useState([]);
 
     const [loading, setLoading] = useState(true);
-
     const [error, setError] = useState("");
 
-    // Expense selected for deletion
-    const [deleteExpense, setDeleteExpense] = useState(null);
+    // Search
+    const [search, setSearch] = useState("");
 
-    // Delete loading state
+    // Existing category filter
+    const [categoryFilter, setCategoryFilter] = useState("");
+
+    // New filters
+    const [paymentMethodFilter, setPaymentMethodFilter] = useState("");
+    const [fromDate, setFromDate] = useState("");
+    const [toDate, setToDate] = useState("");
+
+    // Sorting
+    const [sortBy, setSortBy] = useState("newest");
+
+    // Delete dialog
+    const [deleteDialog, setDeleteDialog] = useState(false);
+    const [selectedExpense, setSelectedExpense] = useState(null);
     const [deleting, setDeleting] = useState(false);
 
+
+    // =========================
     // LOAD EXPENSES
+    // =========================
+
     const loadExpenses = async () => {
 
         try {
 
             setLoading(true);
-
             setError("");
 
             const token = localStorage.getItem("token");
 
-
             if (!token) {
-
                 setError("Please login first.");
-
                 return;
             }
 
+            const response = await getExpenses({}, token);
 
-            const response = await getExpenses(
-                {},
-                token
-            );
-
-
-            setExpenses(
-                response.data.data || []
-            );
-
+            setExpenses(response.data.data || []);
 
         } catch (error) {
 
             console.error(error);
-
 
             setError(
                 error.response?.data?.message ||
                 "Failed to load expenses."
             );
 
-
         } finally {
 
             setLoading(false);
 
         }
-
     };
-    // LOAD ON PAGE OPEN
+
+
     useEffect(() => {
-
         loadExpenses();
-
     }, []);
 
-    // DELETE EXPENSE
+
+    // =========================
+    // DELETE
+    // =========================
+
+    const openDeleteDialog = (expense) => {
+
+        setSelectedExpense(expense);
+        setDeleteDialog(true);
+
+    };
+
+
+    const closeDeleteDialog = () => {
+
+        if (deleting) return;
+
+        setSelectedExpense(null);
+        setDeleteDialog(false);
+
+    };
+
+
     const handleDelete = async () => {
 
-        if (!deleteExpense) {
-            return;
-        }
-        try {
-            setDeleting(true);
-            setError("");
-            const token =
-                localStorage.getItem("token");
-            if (!token) {
+        if (!selectedExpense) return;
 
-                setError("Please login first.");
-                setDeleteExpense(null);
-                return;
-            }
-            await deleteExpenseApi(
-                deleteExpense._id,
+        try {
+
+            setDeleting(true);
+
+            const token = localStorage.getItem("token");
+
+            await deleteExpense(
+                selectedExpense._id,
                 token
             );
 
-            // Remove deleted expense
-            // from current list
-            setExpenses(
-                (previousExpenses) =>
-                    previousExpenses.filter(
-                        (expense) =>
-                            expense._id !==
-                            deleteExpense._id
-                    )
+            setExpenses((prevExpenses) =>
+                prevExpenses.filter(
+                    (expense) =>
+                        expense._id !== selectedExpense._id
+                )
             );
 
-            // Close dialog
-            setDeleteExpense(null);
+            setDeleteDialog(false);
+            setSelectedExpense(null);
+
         } catch (error) {
+
             console.error(error);
+
             setError(
                 error.response?.data?.message ||
                 "Failed to delete expense."
             );
-        } finally {
-            setDeleting(false);
-        }
-    };
-    // CLOSE DELETE DIALOG
-    const closeDeleteDialog = () => {
 
-        if (deleting) {
-            return;
+        } finally {
+
+            setDeleting(false);
+
         }
-        setDeleteExpense(null);
     };
+
+
+    // =========================
+    // CLEAR FILTERS
+    // =========================
+
+    const clearFilters = () => {
+
+        setSearch("");
+        setCategoryFilter("");
+        setPaymentMethodFilter("");
+        setFromDate("");
+        setToDate("");
+        setSortBy("newest");
+
+    };
+
+
+    // =========================
+    // FILTER + SORT
+    // =========================
+
+    const filteredExpenses = expenses
+
+        // Search
+        .filter((expense) => {
+
+            if (!search.trim()) {
+                return true;
+            }
+
+            const searchText =
+                search.toLowerCase().trim();
+
+            return (
+                expense.title
+                    ?.toLowerCase()
+                    .includes(searchText) ||
+
+                expense.category
+                    ?.toLowerCase()
+                    .includes(searchText) ||
+
+                expense.notes
+                    ?.toLowerCase()
+                    .includes(searchText) ||
+
+                expense.paymentMethod
+                    ?.toLowerCase()
+                    .includes(searchText)
+            );
+
+        })
+
+        // Category
+        .filter((expense) => {
+
+            if (!categoryFilter) {
+                return true;
+            }
+
+            return (
+                expense.category === categoryFilter
+            );
+
+        })
+
+        // Payment method
+        .filter((expense) => {
+
+            if (!paymentMethodFilter) {
+                return true;
+            }
+
+            return (
+                expense.paymentMethod ===
+                paymentMethodFilter
+            );
+
+        })
+
+        // From date
+        .filter((expense) => {
+
+            if (!fromDate) {
+                return true;
+            }
+
+            const expenseDate =
+                new Date(expense.date);
+
+            const startDate =
+                new Date(fromDate);
+
+            startDate.setHours(
+                0,
+                0,
+                0,
+                0
+            );
+
+            return expenseDate >= startDate;
+
+        })
+
+        // To date
+        .filter((expense) => {
+
+            if (!toDate) {
+                return true;
+            }
+
+            const expenseDate =
+                new Date(expense.date);
+
+            const endDate =
+                new Date(toDate);
+
+            endDate.setHours(
+                23,
+                59,
+                59,
+                999
+            );
+
+            return expenseDate <= endDate;
+
+        })
+
+        // Sort
+        .sort((a, b) => {
+
+            switch (sortBy) {
+
+                case "oldest":
+
+                    return (
+                        new Date(a.date) -
+                        new Date(b.date)
+                    );
+
+
+                case "amount-high":
+
+                    return (
+                        Number(b.amount) -
+                        Number(a.amount)
+                    );
+
+
+                case "amount-low":
+
+                    return (
+                        Number(a.amount) -
+                        Number(b.amount)
+                    );
+
+
+                case "title-az":
+
+                    return (
+                        a.title || ""
+                    ).localeCompare(
+                        b.title || ""
+                    );
+
+
+                case "title-za":
+
+                    return (
+                        b.title || ""
+                    ).localeCompare(
+                        a.title || ""
+                    );
+
+
+                case "newest":
+
+                default:
+
+                    return (
+                        new Date(b.date) -
+                        new Date(a.date)
+                    );
+
+            }
+
+        });
+
+
     return (
+
         <div className="expenses-page">
-            {/* ========================================
-                HEADER
-            ======================================== */}
+
+            {/* ========================= */}
+            {/* HEADER */}
+            {/* ========================= */}
+
             <div className="expenses-header">
+
                 <div>
+
                     <p className="expenses-label">
                         PERSONAL FINANCE
                     </p>
@@ -159,434 +364,696 @@ function Expense() {
                     </h1>
 
                     <p className="expenses-subtitle">
-                        Track and manage your everyday
-                        spending.
+                        Manage and track all your expenses.
                     </p>
 
                 </div>
+
 
                 <div className="expenses-actions">
 
                     <Link
                         to="/dashboard"
-                        className="secondary-btn"
+                        className="dashboard-btn"
                     >
+
+                        <HomeIcon className="btn-icon" />
+
                         Dashboard
+
                     </Link>
+
 
                     <Link
                         to="/expenses/add"
-                        className="primary-btn"
+                        className="add-expense-btn"
                     >
-                        <PlusIcon />
+
+                        <PlusIcon className="btn-icon" />
+
                         Add Expense
+
                     </Link>
-                </div>
-            </div>
-            {/* ========================================
-                SEARCH / FILTER
-            ======================================== */}
 
-            <div className="glass-card expense-toolbar">
-                <div className="search-box">
-                    <MagnifyingGlassIcon />
-                    <input
-                        type="text"
-                        placeholder="Search expenses..."
-                    />
                 </div>
-                <button
-                    className="filter-btn"
-                    type="button"
-                >
-                    <FunnelIcon />
-                    Filters
-                </button>
+
             </div>
 
-            {/* ========================================
-                ERROR MESSAGE
-            ======================================== */}
 
-            {error && !loading && (
+            {/* ========================= */}
+            {/* ERROR */}
+            {/* ========================= */}
+
+            {error && (
+
                 <div className="expense-error">
-                    {error}
+
+                    <ExclamationTriangleIcon />
+
+                    <span>
+                        {error}
+                    </span>
+
+                    <button
+                        onClick={() => setError("")}
+                    >
+                        <XMarkIcon />
+                    </button>
+
                 </div>
 
             )}
-            {/* ========================================
-                EXPENSE CARD
-            ======================================== */}
-            <div className="glass-card expenses-card">
-                {/* Card Header */}
-                <div className="expenses-card-header">
-                    <div>
-                        <p className="section-label">
-                            TRANSACTIONS
-                        </p>
-                        <h2>
-                            All Expenses
-                        </h2>
+
+
+            {/* ========================= */}
+            {/* FILTER CARD */}
+            {/* ========================= */}
+
+            <div className="glass-card filters-card">
+
+                <div className="filters-header">
+
+                    <div className="filters-title">
+
+                        <div className="filter-icon">
+
+                            <FunnelIcon />
+
+                        </div>
+
+                        <div>
+
+                            <p>
+                                EXPENSE MANAGEMENT
+                            </p>
+
+                            <h2>
+                                Search & Filter
+                            </h2>
+
+                        </div>
+
                     </div>
-                    <div className="expense-count">
-                        <ReceiptPercentIcon />
-                        <span>
-                            {expenses.length} expenses
-                        </span>
+
+
+                    <button
+                        type="button"
+                        className="clear-filters-btn"
+                        onClick={clearFilters}
+                    >
+
+                        <ArrowPathIcon />
+
+                        Clear Filters
+
+                    </button>
+
+                </div>
+
+
+                <div className="filters-grid">
+
+                    {/* Search */}
+
+                    <div className="filter-field search-field">
+
+                        <label>
+                            Search
+                        </label>
+
+                        <div className="search-wrapper">
+
+                            <MagnifyingGlassIcon />
+
+                            <input
+                                type="text"
+                                placeholder="Search expenses..."
+                                value={search}
+                                onChange={(e) =>
+                                    setSearch(
+                                        e.target.value
+                                    )
+                                }
+                            />
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Category */}
+
+                    <div className="filter-field">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <select
+                            value={categoryFilter}
+                            onChange={(e) =>
+                                setCategoryFilter(
+                                    e.target.value
+                                )
+                            }
+                        >
+
+                            <option value="">
+                                All Categories
+                            </option>
+
+                            <option value="Food">
+                                Food
+                            </option>
+
+                            <option value="Transport">
+                                Transport
+                            </option>
+
+                            <option value="Shopping">
+                                Shopping
+                            </option>
+
+                            <option value="Bills">
+                                Bills
+                            </option>
+
+                            <option value="Entertainment">
+                                Entertainment
+                            </option>
+
+                            <option value="Health">
+                                Health
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    {/* Payment Method */}
+
+                    <div className="filter-field">
+
+                        <label>
+                            Payment Method
+                        </label>
+
+                        <select
+                            value={paymentMethodFilter}
+                            onChange={(e) =>
+                                setPaymentMethodFilter(
+                                    e.target.value
+                                )
+                            }
+                        >
+
+                            <option value="">
+                                All Payment Methods
+                            </option>
+
+                            <option value="Cash">
+                                Cash
+                            </option>
+
+                            <option value="Credit Card">
+                                Credit Card
+                            </option>
+
+                            <option value="Debit Card">
+                                Debit Card
+                            </option>
+
+                            <option value="UPI">
+                                UPI
+                            </option>
+
+                            <option value="Net Banking">
+                                Net Banking
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    {/* From Date */}
+
+                    <div className="filter-field">
+
+                        <label>
+                            From Date
+                        </label>
+
+                        <input
+                            type="date"
+                            value={fromDate}
+                            onChange={(e) =>
+                                setFromDate(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                    </div>
+
+
+                    {/* To Date */}
+
+                    <div className="filter-field">
+
+                        <label>
+                            To Date
+                        </label>
+
+                        <input
+                            type="date"
+                            value={toDate}
+                            onChange={(e) =>
+                                setToDate(
+                                    e.target.value
+                                )
+                            }
+                        />
+
+                    </div>
+
+
+                    {/* Sort */}
+
+                    <div className="filter-field">
+
+                        <label>
+                            Sort By
+                        </label>
+
+                        <select
+                            value={sortBy}
+                            onChange={(e) =>
+                                setSortBy(
+                                    e.target.value
+                                )
+                            }
+                        >
+
+                            <option value="newest">
+                                Newest First
+                            </option>
+
+                            <option value="oldest">
+                                Oldest First
+                            </option>
+
+                            <option value="amount-high">
+                                Amount: High → Low
+                            </option>
+
+                            <option value="amount-low">
+                                Amount: Low → High
+                            </option>
+
+                            <option value="title-az">
+                                Title: A → Z
+                            </option>
+
+                            <option value="title-za">
+                                Title: Z → A
+                            </option>
+
+                        </select>
 
                     </div>
 
                 </div>
-                {/* ========================================
-                    LOADING
-                ======================================== */}
-                {loading && (
-                    <div className="expense-state">
+
+            </div>
+
+
+            {/* ========================= */}
+            {/* EXPENSE TABLE */}
+            {/* ========================= */}
+
+            <div className="glass-card expenses-table-card">
+
+                <div className="table-header">
+
+                    <div>
+
+                        <p className="table-label">
+                            TRANSACTIONS
+                        </p>
+
+                        <h2>
+                            All Expenses
+                        </h2>
+
+                    </div>
+
+                    <span className="expense-count">
+
+                        {filteredExpenses.length}
+
+                        {" "}
+
+                        {filteredExpenses.length === 1
+                            ? "expense"
+                            : "expenses"}
+
+                    </span>
+
+                </div>
+
+
+                {loading ? (
+
+                    <div className="expenses-loading">
+
                         <div className="loading-spinner"></div>
+
                         <p>
                             Loading expenses...
                         </p>
 
                     </div>
-                )}
 
-                {/* ========================================
-                    ERROR
-                ======================================== */}
+                ) : filteredExpenses.length === 0 ? (
 
-                {error && !loading && expenses.length === 0 && (
+                    <div className="no-expenses">
 
-                    <div className="expense-state error-state">
-                        <ExclamationTriangleIcon />
+                        <div className="empty-icon">
+
+                            <MagnifyingGlassIcon />
+
+                        </div>
+
+                        <h3>
+                            No expenses found
+                        </h3>
+
                         <p>
-                            {error}
+                            Try changing your search
+                            or filter settings.
                         </p>
 
                     </div>
-                )}
 
-                {/* ========================================
-                    NO EXPENSES
-                ======================================== */}
+                ) : (
 
-                {!loading &&
-                    !error &&
-                    expenses.length === 0 && (
+                    <div className="table-wrapper">
 
-                        <div className="expense-state">
+                        <table className="expenses-table">
 
-                            <ReceiptPercentIcon />
+                            <thead>
 
-                            <h3>
-                                No expenses yet
-                            </h3>
+                                <tr>
 
-                            <p>
-                                Start tracking your
-                                spending by adding
-                                your first expense.
-                            </p>
+                                    <th>
+                                        Title
+                                    </th>
 
-                            <Link
-                                to="/expenses/add"
-                                className="primary-btn"
-                            >
-                                <PlusIcon />
-                                Add Expense
-                            </Link>
-                        </div>
-                    )}
+                                    <th>
+                                        Amount
+                                    </th>
 
-                {/* ========================================
-                    EXPENSE TABLE
-                ======================================== */}
-                {!loading &&
-                    !error &&
-                    expenses.length > 0 && (
-                        <div className="table-wrapper">
-                            <table className="expenses-table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Expense
-                                        </th>
-                                        <th>
-                                            Category
-                                        </th>
-                                        <th>
-                                            Amount
-                                        </th>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Payment
-                                        </th>
-                                        <th>
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                    <th>
+                                        Category
+                                    </th>
 
-                                    {expenses.map(
-                                        (expense) => (
+                                    <th>
+                                        Date
+                                    </th>
 
-                                            <tr
-                                                key={
-                                                    expense._id
-                                                }
-                                            >
+                                    <th>
+                                        Payment Method
+                                    </th>
+
+                                    <th>
+                                        Notes
+                                    </th>
+
+                                    <th>
+                                        Actions
+                                    </th>
+
+                                </tr>
+
+                            </thead>
 
 
-                                                {/* Expense */}
+                            <tbody>
 
-                                                <td>
+                                {filteredExpenses.map(
+                                    (expense) => (
 
-                                                    <div className="expense-title">
+                                        <tr
+                                            key={
+                                                expense._id
+                                            }
+                                        >
 
-                                                        <div className="expense-icon">
+                                            <td>
 
-                                                            <ReceiptPercentIcon />
+                                                <div className="expense-title">
 
-                                                        </div>
-
-
-                                                        <div>
-
-                                                            <strong>
-                                                                {
-                                                                    expense.title
-                                                                }
-                                                            </strong>
-
-
-                                                            {expense.notes && (
-
-                                                                <span>
-                                                                    {
-                                                                        expense.notes
-                                                                    }
-                                                                </span>
-
-                                                            )}
-
-                                                        </div>
-
-                                                    </div>
-
-                                                </td>
-
-
-                                                {/* Category */}
-
-                                                <td>
-
-                                                    <span
-                                                        className={`category-badge ${
-                                                            expense.category
-                                                                ?.toLowerCase()
-                                                                .replace(
-                                                                    /\s+/g,
-                                                                    "-"
-                                                                )
-                                                        }`}
-                                                    >
-
+                                                    <strong>
                                                         {
-                                                            expense.category
+                                                            expense.title
                                                         }
-
-                                                    </span>
-
-                                                </td>
-
-
-                                                {/* Amount */}
-
-                                                <td>
-
-                                                    <strong className="amount">
-
-                                                        ₹
-                                                        {Number(
-                                                            expense.amount
-                                                        ).toLocaleString(
-                                                            "en-IN"
-                                                        )}
-
                                                     </strong>
 
-                                                </td>
+                                                </div>
+
+                                            </td>
 
 
-                                                {/* Date */}
+                                            <td>
 
-                                                <td>
+                                                <strong className="expense-amount">
 
-                                                    {new Date(
-                                                        expense.date
-                                                    ).toLocaleDateString(
+                                                    ₹
+                                                    {Number(
+                                                        expense.amount
+                                                    ).toLocaleString(
                                                         "en-IN"
                                                     )}
 
-                                                </td>
+                                                </strong>
+
+                                            </td>
 
 
-                                                {/* Payment */}
+                                            <td>
 
-                                                <td>
+                                                <span className="category-badge">
 
-                                                    <span className="payment-method">
+                                                    {
+                                                        expense.category
+                                                    }
 
-                                                        {
-                                                            expense.paymentMethod
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                {new Date(
+                                                    expense.date
+                                                ).toLocaleDateString(
+                                                    "en-IN"
+                                                )}
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <span className="payment-badge">
+
+                                                    {
+                                                        expense.paymentMethod
+                                                    }
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <span className="notes-cell">
+
+                                                    {
+                                                        expense.notes ||
+                                                        "-"
+                                                    }
+
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                                <div className="action-buttons">
+
+                                                    <Link
+                                                        to={`/expenses/edit/${expense._id}`}
+                                                        className="edit-btn"
+                                                        title="Edit expense"
+                                                    >
+
+                                                        <PencilSquareIcon />
+
+                                                    </Link>
+
+
+                                                    <button
+                                                        type="button"
+                                                        className="delete-btn"
+                                                        title="Delete expense"
+                                                        onClick={() =>
+                                                            openDeleteDialog(
+                                                                expense
+                                                            )
                                                         }
+                                                    >
 
-                                                    </span>
+                                                        <TrashIcon />
 
-                                                </td>
+                                                    </button>
 
+                                                </div>
 
-                                                {/* Actions */}
+                                            </td>
 
-                                                <td>
+                                        </tr>
 
-                                                    <div className="table-actions">
+                                    )
+                                )}
 
+                            </tbody>
 
-                                                        {/* Edit */}
+                        </table>
 
-                                                        <Link
-                                                            to={`/expenses/edit/${expense._id}`}
-                                                            className="icon-btn edit-btn"
-                                                            title="Edit expense"
-                                                        >
+                    </div>
 
-                                                            <PencilSquareIcon />
+                )}
 
-                                                        </Link>
-
-
-                                                        {/* Delete */}
-
-                                                        <button
-                                                            type="button"
-                                                            className="delete-btn"
-                                                            onClick={() =>
-                                                                setDeleteExpense(
-                                                                    expense
-                                                                )
-                                                            }
-                                                            title="Delete expense"
-                                                        >
-
-                                                            <TrashIcon />
-
-                                                            Delete
-
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        )
-                                    )}
-
-                                </tbody>
-
-                            </table>
-
-                        </div>
-                    )}
             </div>
-            {/* ========================================
-                DELETE CONFIRMATION MODAL
-            ======================================== */}
-            {deleteExpense && (
+
+
+            {/* ========================= */}
+            {/* DELETE DIALOG */}
+            {/* ========================= */}
+
+            {deleteDialog && (
+
                 <div
-                    className="delete-modal-overlay"
+                    className="delete-overlay"
                     onClick={closeDeleteDialog}
                 >
+
                     <div
-                        className="delete-modal"
-                        onClick={(event) =>
-                            event.stopPropagation()
+                        className="delete-dialog"
+                        onClick={(e) =>
+                            e.stopPropagation()
                         }
                     >
-                        {/* Close */}
+
                         <button
                             type="button"
-                            className="delete-modal-close"
+                            className="dialog-close"
                             onClick={closeDeleteDialog}
                             disabled={deleting}
-                            aria-label="Close"
                         >
+
                             <XMarkIcon />
+
                         </button>
-                        {/* Warning Icon */}
+
+
                         <div className="delete-warning-icon">
+
                             <ExclamationTriangleIcon />
+
                         </div>
-                        {/* Title */}
+
+
                         <h2>
                             Delete Expense?
                         </h2>
 
 
-                        {/* Description */}
-                        <p className="delete-modal-text">
+                        <p>
+
                             Are you sure you want to
                             delete
+
+                            {" "}
+
                             <strong>
-                                {" "}
-                                {deleteExpense.title}
+                                {selectedExpense?.title}
                             </strong>
+
                             ?
 
-                        </p>
-                        <p className="delete-modal-subtext">
+                            <br />
+
                             This action cannot be undone.
+
                         </p>
-                        {/* Buttons */}
 
-                        <div className="delete-modal-actions">
 
-                            {/* Cancel */}
+                        <div className="delete-dialog-actions">
+
                             <button
                                 type="button"
-                                className="delete-cancel-btn"
+                                className="cancel-delete-btn"
                                 onClick={closeDeleteDialog}
                                 disabled={deleting}
                             >
-
                                 Cancel
-
                             </button>
 
 
-                            {/* Confirm Delete */}
-
                             <button
                                 type="button"
-                                className="delete-confirm-btn"
+                                className="confirm-delete-btn"
                                 onClick={handleDelete}
                                 disabled={deleting}
                             >
 
-                                <TrashIcon />
+                                {deleting ? (
+                                    "Deleting..."
+                                ) : (
+                                    <>
+                                        <TrashIcon />
+                                        Delete
+                                    </>
+                                )}
 
-                                {deleting
-                                    ? "Deleting..."
-                                    : "Delete Expense"
-                                }
                             </button>
+
                         </div>
+
                     </div>
+
                 </div>
+
             )}
+
         </div>
+
     );
 }
 
-
-export default Expense;
+export default Expenses;

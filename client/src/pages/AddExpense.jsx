@@ -331,14 +331,6 @@ function AddExpense() {
                                             Entertainment
                                         </option>
 
-                                        <option value="Healthcare">
-                                            Healthcare
-                                        </option>
-
-                                        <option value="Education">
-                                            Education
-                                        </option>
-
                                         <option value="Other">
                                             Other
                                         </option>
