@@ -38,34 +38,42 @@ import "./Dashboard.css";
 
 function Dashboard() {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
-
-    // Dashboard data
+   
+    // DASHBOARD DATA
+   
 
     const [dashboardData, setDashboardData] = useState({
         totalExpenses: 0,
         monthlyExpenses: 0,
         monthlyBudget: 0,
+        monthlyIncome: 0,
         currentBalance: 0
     });
 
 
-    // Chart data
+   
+    // CHART DATA
+   
 
     const [categoryData, setCategoryData] = useState([]);
 
     const [monthlyData, setMonthlyData] = useState([]);
 
 
-    // Loading and error
+   
+    // LOADING / ERROR
+   
 
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState("");
 
 
-    // Load dashboard
+   
+    // LOAD DASHBOARD
+   
 
     const loadDashboard = async () => {
 
@@ -75,19 +83,19 @@ function Dashboard() {
 
             setError("");
 
-
             const token = localStorage.getItem("token");
 
 
+            // No token
             if (!token) {
 
                 setError("Please login first.");
 
                 return;
-
             }
 
 
+            // Get dashboard data
             const [
                 dashboardResponse,
                 categoryResponse,
@@ -103,16 +111,19 @@ function Dashboard() {
             ]);
 
 
+            // Dashboard
             setDashboardData(
                 dashboardResponse.data.data
             );
 
 
+            // Category chart
             setCategoryData(
                 categoryResponse.data.data
             );
 
 
+            // Monthly chart
             setMonthlyData(
                 monthlyResponse.data.data
             );
@@ -122,12 +133,10 @@ function Dashboard() {
 
             console.error(error);
 
-
             setError(
                 error.response?.data?.message ||
                 "Failed to load dashboard."
             );
-
 
         } finally {
 
@@ -138,6 +147,10 @@ function Dashboard() {
     };
 
 
+   
+    // LOAD ON PAGE OPEN
+   
+
     useEffect(() => {
 
         loadDashboard();
@@ -145,7 +158,9 @@ function Dashboard() {
     }, []);
 
 
-    // Budget percentage
+   
+    // BUDGET PERCENTAGE
+   
 
     const budgetPercentage =
         dashboardData.monthlyBudget > 0
@@ -159,14 +174,18 @@ function Dashboard() {
             : 0;
 
 
-    // Remaining budget
+   
+    // REMAINING BUDGET
+   
 
     const remainingBudget =
         dashboardData.monthlyBudget -
         dashboardData.monthlyExpenses;
 
 
-    // Logout
+   
+    // LOGOUT
+   
 
     const handleLogout = () => {
 
@@ -177,7 +196,9 @@ function Dashboard() {
     };
 
 
-    // Loading screen
+   
+    // LOADING SCREEN
+   
 
     if (loading) {
 
@@ -200,50 +221,57 @@ function Dashboard() {
     }
 
 
-    // Error screen
+   
+    // ERROR SCREEN
+   
 
-   if (error) {
+    if (error) {
 
-    return (
+        return (
 
-        <div className="dashboard">
+            <div className="dashboard">
 
-            <div className="glass-card stat-card dashboard-error-card">
+                <div className="glass-card stat-card dashboard-error-card">
 
-                <h2>
-                    Dashboard
-                </h2>
+                    <h2>
+                        Dashboard
+                    </h2>
 
-                <p>
-                    {error}
-                </p>
+                    <p>
+                        {error}
+                    </p>
 
-                <button
-                    type="button"
-                    className="dashboard-login-btn"
-                    onClick={() => navigate("/login")}
-                >
-                    Login
-                </button>
+                    <button
+                        type="button"
+                        className="dashboard-login-btn"
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </button>
+
+                </div>
 
             </div>
 
-        </div>
+        );
 
-    );
+    }
 
-}
 
+   
+    // MAIN DASHBOARD
+   
 
     return (
 
         <div className="dashboard">
 
 
-            {/* Header */}
+            {/* ==================================
+                HEADER
+            ================================== */}
 
             <div className="dashboard-header">
-
 
                 <div>
 
@@ -262,7 +290,7 @@ function Dashboard() {
                 </div>
 
 
-                {/* Header Actions */}
+                {/* HEADER ACTIONS */}
 
                 <div className="dashboard-actions">
 
@@ -273,37 +301,47 @@ function Dashboard() {
                         View All Expenses
                     </Link>
 
+
                     <Link
                         to="/expenses/add"
                         className="add-expense-btn dashboard-main-btn"
                     >
+
                         <PlusIcon className="btn-icon" />
+
                         Add Expense
+
                     </Link>
+
 
                     <Link
                         to="/profile"
                         className="profile-btn"
                         title="Profile"
                     >
+
                         <span className="profile-icon-circle">
+
                             <UserCircleIcon />
+
                         </span>
+
                         <span className="profile-text">
                             Profile
                         </span>
+
                     </Link>
+
 
                     <button
                         type="button"
                         className="logout-btn"
                         title="Logout"
-                        onClick={() => {
-                            localStorage.removeItem("token");
-                            navigate("/login");
-                        }}
+                        onClick={handleLogout}
                     >
+
                         <ArrowRightOnRectangleIcon />
+
                     </button>
 
                 </div>
@@ -311,12 +349,14 @@ function Dashboard() {
             </div>
 
 
-            {/* Statistics */}
+            {/* ==================================
+                STATISTICS
+            ================================== */}
 
             <div className="stats-grid">
 
 
-                {/* Total Income */}
+                {/* TOTAL INCOME */}
 
                 <div className="glass-card stat-card">
 
@@ -341,18 +381,23 @@ function Dashboard() {
 
 
                     <h2>
-                        ₹50,000
+
+                        ₹
+                        {dashboardData.monthlyIncome.toLocaleString(
+                            "en-IN"
+                        )}
+
                     </h2>
 
 
                     <p className="stat-description">
-                        Money received
+                        Monthly income
                     </p>
 
                 </div>
 
 
-                {/* Total Expenses */}
+                {/* TOTAL EXPENSES */}
 
                 <div className="glass-card stat-card">
 
@@ -393,7 +438,7 @@ function Dashboard() {
                 </div>
 
 
-                {/* Current Balance */}
+                {/* CURRENT BALANCE */}
 
                 <div className="glass-card stat-card">
 
@@ -428,13 +473,13 @@ function Dashboard() {
 
 
                     <p className="stat-description">
-                        Available balance
+                        Income minus expenses
                     </p>
 
                 </div>
 
 
-                {/* Monthly Expenses */}
+                {/* MONTHLY EXPENSES */}
 
                 <div className="glass-card stat-card">
 
@@ -474,17 +519,16 @@ function Dashboard() {
 
                 </div>
 
-
             </div>
 
 
-            {/* Monthly Budget */}
+            {/* ==================================
+                MONTHLY BUDGET
+            ================================== */}
 
             <div className="glass-card budget-card">
 
-
                 <div className="budget-header">
-
 
                     <div>
 
@@ -540,11 +584,10 @@ function Dashboard() {
 
                     </div>
 
-
                 </div>
 
 
-                {/* Progress */}
+                {/* PROGRESS */}
 
                 <div className="budget-progress">
 
@@ -558,7 +601,7 @@ function Dashboard() {
                 </div>
 
 
-                {/* Footer */}
+                {/* FOOTER */}
 
                 <div className="budget-footer">
 
@@ -568,6 +611,7 @@ function Dashboard() {
                         {dashboardData.monthlyExpenses.toLocaleString(
                             "en-IN"
                         )}
+
                         {" "}spent
 
                     </span>
@@ -582,41 +626,40 @@ function Dashboard() {
                 </div>
 
 
-                {/* Budget Warning */}
+                {/* WARNING */}
 
                 {dashboardData.monthlyExpenses >
                     dashboardData.monthlyBudget && (
 
-                        <div className="budget-warning">
+                    <div className="budget-warning">
 
-                            <ExclamationTriangleIcon
-                                className="warning-icon"
-                            />
+                        <ExclamationTriangleIcon
+                            className="warning-icon"
+                        />
 
-                            <span>
-                                You have exceeded your monthly budget.
-                            </span>
+                        <span>
+                            You have exceeded your monthly budget.
+                        </span>
 
-                        </div>
+                    </div>
 
-                    )}
-
+                )}
 
             </div>
 
 
-            {/* Charts */}
+            {/* ==================================
+                CHARTS
+            ================================== */}
 
             <div className="charts-grid">
 
 
-                {/* Category Chart */}
+                {/* CATEGORY CHART */}
 
                 <div className="glass-card chart-card">
 
-
                     <div className="chart-header">
-
 
                         <div>
 
@@ -641,7 +684,6 @@ function Dashboard() {
 
 
                     <div className="chart-container">
-
 
                         {categoryData.length === 0 ? (
 
@@ -702,12 +744,16 @@ function Dashboard() {
                                                 "en-IN"
                                             )}`
                                         }
+
                                         contentStyle={{
                                             background:
                                                 "rgba(30, 40, 20, 0.9)",
+
                                             border:
                                                 "1px solid rgba(200, 215, 170, 0.2)",
+
                                             borderRadius: "12px",
+
                                             color: "#f1f5e9"
                                         }}
                                     />
@@ -720,17 +766,14 @@ function Dashboard() {
 
                     </div>
 
-
                 </div>
 
 
-                {/* Monthly Chart */}
+                {/* MONTHLY CHART */}
 
                 <div className="glass-card chart-card">
 
-
                     <div className="chart-header">
-
 
                         <div>
 
@@ -755,7 +798,6 @@ function Dashboard() {
 
 
                     <div className="chart-container">
-
 
                         {monthlyData.length === 0 ? (
 
@@ -807,12 +849,16 @@ function Dashboard() {
                                                 "en-IN"
                                             )}`
                                         }
+
                                         contentStyle={{
                                             background:
                                                 "rgba(30, 40, 20, 0.9)",
+
                                             border:
                                                 "1px solid rgba(200, 215, 170, 0.2)",
+
                                             borderRadius: "12px",
+
                                             color: "#f1f5e9"
                                         }}
                                     />
@@ -839,15 +885,12 @@ function Dashboard() {
 
                 </div>
 
-
             </div>
-
 
         </div>
 
     );
 
 }
-
 
 export default Dashboard;

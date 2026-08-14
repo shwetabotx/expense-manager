@@ -15,13 +15,7 @@ const registerUser = async (req, res) => {
 
     try {
 
-        const {
-            name,
-            email,
-            password,
-            monthlyBudget
-        } = req.body;
-
+        const { name, email, password, income, monthlyBudget } = req.body;
 
         // Required fields
 
@@ -38,6 +32,13 @@ const registerUser = async (req, res) => {
                 message: "All fields are required"
             });
 
+        }
+
+        if (income === undefined || Number(income) < 0) {
+            return res.status(400).json({
+                success: false,
+                message: "Income must be a valid number"
+            });
         }
 
 
@@ -123,15 +124,11 @@ const registerUser = async (req, res) => {
         // Create user
 
         const user = await User.create({
-
             name: name.trim(),
-
             email: email.trim().toLowerCase(),
-
             password: hashedPassword,
-
-            monthlyBudget: budget
-
+            income: Number(income),
+            monthlyBudget: Number(monthlyBudget || 0)
         });
 
 

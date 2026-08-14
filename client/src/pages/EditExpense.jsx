@@ -2,14 +2,29 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import {
+    ArrowLeftIcon,
+    CheckIcon,
+    CurrencyRupeeIcon,
+    DocumentTextIcon,
+    CalendarDaysIcon,
+    CreditCardIcon,
+    TagIcon,
+    ExclamationCircleIcon
+} from "@heroicons/react/24/outline"; 
+
+import {
     getExpenseById,
     updateExpense
 } from "../services/expenseService";
+
+import "./EditExpense.css";
+
 
 function EditExpense() {
 
     const { id } = useParams();
     const navigate = useNavigate();
+
 
     const [formData, setFormData] = useState({
         title: "",
@@ -20,11 +35,16 @@ function EditExpense() {
         notes: ""
     });
 
+
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
-    // Load expense
+
+
+    // LOAD EXPENSE
+
+
     useEffect(() => {
 
         const loadExpense = async () => {
@@ -39,9 +59,11 @@ function EditExpense() {
                     return;
                 }
 
+
                 const response = await getExpenseById(id, token);
 
                 const expense = response.data.data;
+
 
                 setFormData({
                     title: expense.title,
@@ -53,6 +75,7 @@ function EditExpense() {
                     paymentMethod: expense.paymentMethod,
                     notes: expense.notes || ""
                 });
+
 
             } catch (error) {
 
@@ -68,22 +91,34 @@ function EditExpense() {
                 setLoading(false);
 
             }
+
         };
+
 
         loadExpense();
 
     }, [id]);
 
+
+
+    // HANDLE CHANGE
+
+
     const handleChange = (event) => {
 
         const { name, value } = event.target;
 
-        setFormData({
-            ...formData,
+        setFormData((prev) => ({
+            ...prev,
             [name]: value
-        });
+        }));
 
     };
+
+
+
+    // HANDLE SUBMIT
+
 
     const handleSubmit = async (event) => {
 
@@ -91,21 +126,35 @@ function EditExpense() {
 
         setError("");
 
+
         // Validation
+
         if (!formData.title.trim()) {
+
             setError("Title is required.");
+
             return;
+
         }
+
 
         if (!formData.amount || Number(formData.amount) <= 0) {
+
             setError("Amount must be greater than 0.");
+
             return;
+
         }
 
+
         if (!formData.date) {
+
             setError("Date is required.");
+
             return;
+
         }
+
 
         try {
 
@@ -113,10 +162,15 @@ function EditExpense() {
 
             const token = localStorage.getItem("token");
 
+
             if (!token) {
+
                 setError("Please login first.");
+
                 return;
+
             }
+
 
             await updateExpense(
                 id,
@@ -127,7 +181,9 @@ function EditExpense() {
                 token
             );
 
+
             navigate("/expenses");
+
 
         } catch (error) {
 
@@ -143,171 +199,404 @@ function EditExpense() {
             setSaving(false);
 
         }
+
     };
+
+
+
+    // LOADING
+
 
     if (loading) {
 
         return (
-            <div className="container">
-                <h1>Edit Expense</h1>
-                <p>Loading expense...</p>
+
+            <div className="edit-expense-page">
+
+                <div className="edit-loading glass-card">
+
+                    <div className="loading-spinner"></div>
+
+                    <p>
+                        Loading expense...
+                    </p>
+
+                </div>
+
             </div>
+
         );
 
     }
 
+
+
+    // PAGE
+
+
     return (
-        <div className="container">
 
-            <h1>Edit Expense</h1>
+        <div className="edit-expense-page">
 
-            {error && (
-                <p>{error}</p>
-            )}
 
-            <form onSubmit={handleSubmit}>
+            {/* Header */}
 
-                {/* Title */}
+            <div className="edit-expense-header">
 
                 <div>
-                    <label>Title</label>
 
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                    />
+                    <p className="edit-expense-label">
+                        TRANSACTION MANAGEMENT
+                    </p>
+
+                    <h1>
+                        Edit Expense
+                    </h1>
+
+                    <p className="edit-expense-subtitle">
+                        Update the details of your transaction.
+                    </p>
+
                 </div>
 
-
-                {/* Amount */}
-
-                <div>
-                    <label>Amount</label>
-
-                    <input
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        min="0"
-                        step="0.01"
-                    />
-                </div>
-
-
-                {/* Category */}
-
-                <div>
-                    <label>Category</label>
-
-                    <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                    >
-                        <option value="Food">Food</option>
-                        <option value="Travel">Travel</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Bills">Bills</option>
-                        <option value="Entertainment">
-                            Entertainment
-                        </option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-
-
-                {/* Date */}
-
-                <div>
-                    <label>Date</label>
-
-                    <input
-                        type="date"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                    />
-                </div>
-
-
-                {/* Payment Method */}
-
-                <div>
-                    <label>Payment Method</label>
-
-                    <select
-                        name="paymentMethod"
-                        value={formData.paymentMethod}
-                        onChange={handleChange}
-                    >
-                        <option value="Cash">
-                            Cash
-                        </option>
-
-                        <option value="Credit Card">
-                            Credit Card
-                        </option>
-
-                        <option value="Debit Card">
-                            Debit Card
-                        </option>
-
-                        <option value="UPI">
-                            UPI
-                        </option>
-
-                        <option value="Net Banking">
-                            Net Banking
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-                    </select>
-                </div>
-
-
-                {/* Notes */}
-
-                <div>
-                    <label>Notes</label>
-
-                    <textarea
-                        name="notes"
-                        value={formData.notes}
-                        onChange={handleChange}
-                        placeholder="Optional notes"
-                    />
-                </div>
-
-                
-
-
-                {/* Buttons */}
-
-                <button
-                    type="submit"
-                    disabled={saving}
-                >
-                    {saving
-                        ? "Updating..."
-                        : "Update Expense"}
-                </button>
 
                 <button
                     type="button"
+                    className="back-expenses-btn"
                     onClick={() => navigate("/expenses")}
                 >
-                    Back
+
+                    <ArrowLeftIcon />
+
+                    <span>
+                        Back to Transactions
+                    </span>
+
                 </button>
 
-            </form>
+            </div>
+
+
+            {/* Error */}
+
+            {error && (
+
+                <div className="edit-expense-error">
+
+                    <ExclamationCircleIcon />
+
+                    <span>
+                        {error}
+                    </span>
+
+                </div>
+
+            )}
+
+
+            {/* Form Card */}
+
+            <div className="glass-card edit-form-card">
+
+
+                {/* Card Header */}
+
+                <div className="edit-form-header">
+
+                    <div className="edit-form-icon">
+
+                        <DocumentTextIcon />
+
+                    </div>
+
+                    <div>
+
+                        <p>
+                            EXPENSE DETAILS
+                        </p>
+
+                        <h2>
+                            Update Transaction
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <form onSubmit={handleSubmit}>
+
+
+                    {/* Main Fields */}
+
+                    <div className="edit-form-grid">
+
+
+                        {/* Title */}
+
+                        <div className="edit-field">
+
+                            <label htmlFor="title">
+                                Title
+                            </label>
+
+                            <div className="edit-input-wrapper">
+
+                                <DocumentTextIcon />
+
+                                <input
+                                    id="title"
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Grocery shopping"
+                                    disabled={saving}
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Amount */}
+
+                        <div className="edit-field">
+
+                            <label htmlFor="amount">
+                                Amount
+                            </label>
+
+                            <div className="edit-input-wrapper">
+
+                                <CurrencyRupeeIcon />
+
+                                <input
+                                    id="amount"
+                                    type="number"
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleChange}
+                                    min="0"
+                                    step="0.01"
+                                    placeholder="0.00"
+                                    disabled={saving}
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Category */}
+
+                        <div className="edit-field">
+
+                            <label htmlFor="category">
+                                Category
+                            </label>
+
+                            <div className="edit-input-wrapper">
+
+                                <TagIcon />
+
+                                <select
+                                    id="category"
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    disabled={saving}
+                                >
+
+                                    <option value="Food">
+                                        Food
+                                    </option>
+
+                                    <option value="Travel">
+                                        Travel
+                                    </option>
+
+                                    <option value="Shopping">
+                                        Shopping
+                                    </option>
+
+                                    <option value="Bills">
+                                        Bills
+                                    </option>
+
+                                    <option value="Entertainment">
+                                        Entertainment
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Date */}
+
+                        <div className="edit-field">
+
+                            <label htmlFor="date">
+                                Date
+                            </label>
+
+                            <div className="edit-input-wrapper">
+
+                                <CalendarDaysIcon />
+
+                                <input
+                                    id="date"
+                                    type="date"
+                                    name="date"
+                                    value={formData.date}
+                                    onChange={handleChange}
+                                    disabled={saving}
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Payment Method */}
+
+                        <div className="edit-field">
+
+                            <label htmlFor="paymentMethod">
+                                Payment Method
+                            </label>
+
+                            <div className="edit-input-wrapper">
+
+                                <CreditCardIcon />
+
+                                <select
+                                    id="paymentMethod"
+                                    name="paymentMethod"
+                                    value={formData.paymentMethod}
+                                    onChange={handleChange}
+                                    disabled={saving}
+                                >
+
+                                    <option value="Cash">
+                                        Cash
+                                    </option>
+
+                                    <option value="Credit Card">
+                                        Credit Card
+                                    </option>
+
+                                    <option value="Debit Card">
+                                        Debit Card
+                                    </option>
+
+                                    <option value="UPI">
+                                        UPI
+                                    </option>
+
+                                    <option value="Net Banking">
+                                        Net Banking
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Notes */}
+
+                        <div className="edit-field edit-notes-field">
+
+                            <label htmlFor="notes">
+                                Notes
+                                <span>
+                                    Optional
+                                </span>
+                            </label>
+
+                            <div className="edit-textarea-wrapper">
+
+                                <textarea
+                                    id="notes"
+                                    name="notes"
+                                    value={formData.notes}
+                                    onChange={handleChange}
+                                    placeholder="Add any additional notes about this expense..."
+                                    disabled={saving}
+                                    rows="5"
+                                />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Divider */}
+
+                    <div className="edit-form-divider"></div>
+
+
+                    {/* Actions */}
+
+                    <div className="edit-form-actions">
+
+                        <button
+                            type="button"
+                            className="edit-cancel-btn"
+                            onClick={() => navigate("/expenses")}
+                            disabled={saving}
+                        >
+
+                            <ArrowLeftIcon />
+
+                            Cancel
+
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            className="edit-save-btn"
+                            disabled={saving}
+                        >
+
+                            <CheckIcon />
+
+                            {saving
+                                ? "Updating..."
+                                : "Update Expense"
+                            }
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
 
         </div>
+
     );
+
 }
+
 
 export default EditExpense;
