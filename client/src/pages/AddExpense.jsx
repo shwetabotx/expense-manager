@@ -31,7 +31,6 @@ function AddExpense() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-
     const handleChange = (event) => {
 
         const { name, value } = event.target;
