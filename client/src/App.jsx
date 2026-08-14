@@ -6,6 +6,8 @@ import AddExpense from "./pages/AddExpense";
 import EditExpense from "./pages/EditExpense";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+
 
 function App() {
   return (
@@ -40,6 +42,11 @@ function App() {
         <Route
           path="/register"
           element={<Register />}
+        />
+
+        <Route
+          path="/profile"
+          element={<Profile />}
         />
 
       </Routes>

@@ -21,13 +21,6 @@ const userSchema = new mongoose.Schema(
             required: true
         },
 
-        income: {
-            type: Number,
-            required: true,
-            default: 0,
-            min: 0
-        },
-
         monthlyBudget: {
             type: Number,
             required: true,

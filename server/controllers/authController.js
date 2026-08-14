@@ -7,15 +7,22 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{6,}$/;
 
 
-
+// ==========================================
 // REGISTER
-
+// ==========================================
 
 const registerUser = async (req, res) => {
 
     try {
 
-        const { name, email, password, income, monthlyBudget } = req.body;
+        const {
+            name,
+            email,
+            password,
+            monthlyIncome,
+            monthlyBudget
+        } = req.body;
+
 
         // Required fields
 
@@ -23,6 +30,8 @@ const registerUser = async (req, res) => {
             !name ||
             !email ||
             !password ||
+            monthlyIncome === undefined ||
+            monthlyIncome === "" ||
             monthlyBudget === undefined ||
             monthlyBudget === ""
         ) {
@@ -32,13 +41,6 @@ const registerUser = async (req, res) => {
                 message: "All fields are required"
             });
 
-        }
-
-        if (income === undefined || Number(income) < 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Income must be a valid number"
-            });
         }
 
 
@@ -79,9 +81,28 @@ const registerUser = async (req, res) => {
         }
 
 
-        // Validate budget
+        // Convert income and budget to numbers
 
+        const income = Number(monthlyIncome);
         const budget = Number(monthlyBudget);
+
+
+        // Validate income
+
+        if (
+            !Number.isFinite(income) ||
+            income < 0
+        ) {
+
+            return res.status(400).json({
+                success: false,
+                message: "Monthly income must be a valid number"
+            });
+
+        }
+
+
+        // Validate budget
 
         if (
             !Number.isFinite(budget) ||
@@ -90,7 +111,7 @@ const registerUser = async (req, res) => {
 
             return res.status(400).json({
                 success: false,
-                message: "Monthly budget must be a valid positive number"
+                message: "Monthly budget must be a valid number"
             });
 
         }
@@ -124,11 +145,17 @@ const registerUser = async (req, res) => {
         // Create user
 
         const user = await User.create({
+
             name: name.trim(),
+
             email: email.trim().toLowerCase(),
+
             password: hashedPassword,
-            income: Number(income),
-            monthlyBudget: Number(monthlyBudget || 0)
+
+            monthlyIncome: Number(income),
+
+            monthlyBudget: budget
+
         });
 
 
@@ -148,6 +175,8 @@ const registerUser = async (req, res) => {
 
                 email: user.email,
 
+                monthlyIncome: user.monthlyIncome,
+
                 monthlyBudget: user.monthlyBudget
 
             }
@@ -159,6 +188,8 @@ const registerUser = async (req, res) => {
 
         console.error("Register error:", error);
 
+
+        // Duplicate email
 
         if (error.code === 11000) {
 
@@ -172,6 +203,8 @@ const registerUser = async (req, res) => {
 
         }
 
+
+        // Mongoose validation error
 
         if (error.name === "ValidationError") {
 
@@ -206,9 +239,9 @@ const registerUser = async (req, res) => {
 };
 
 
-
+// ==========================================
 // LOGIN
-
+// ==========================================
 
 const loginUser = async (req, res) => {
 
@@ -296,6 +329,8 @@ const loginUser = async (req, res) => {
         );
 
 
+        // Response
+
         res.status(200).json({
 
             success: true,
@@ -313,6 +348,9 @@ const loginUser = async (req, res) => {
                     name: user.name,
 
                     email: user.email,
+
+                    monthlyIncome:
+                        user.monthlyIncome || 0,
 
                     monthlyBudget:
                         user.monthlyBudget || 0
@@ -341,6 +379,10 @@ const loginUser = async (req, res) => {
 
 };
 
+
+// ==========================================
+// EXPORT
+// ==========================================
 
 module.exports = {
 
