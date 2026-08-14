@@ -20,7 +20,7 @@ function Dashboard() {
         monthlyBudget: 30000,
         currentBalance: 30000
     });
-
+    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [categoryData, setCategoryData] = useState([]);

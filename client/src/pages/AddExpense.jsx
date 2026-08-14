@@ -1,6 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+    ArrowLeftIcon,
+    CurrencyRupeeIcon,
+    DocumentTextIcon,
+    TagIcon,
+    CalendarDaysIcon,
+    CreditCardIcon,
+    PencilSquareIcon,
+    CheckIcon
+} from "@heroicons/react/24/outline";
+
 import { createExpense } from "../services/expenseService";
+import "./AddExpense.css";
 
 function AddExpense() {
 
@@ -9,64 +21,107 @@ function AddExpense() {
     const [formData, setFormData] = useState({
         title: "",
         amount: "",
-        category: "Food",
+        category: "",
         date: "",
-        paymentMethod: "UPI",
+        paymentMethod: "",
         notes: ""
     });
 
-    const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
 
     const handleChange = (event) => {
 
         const { name, value } = event.target;
 
-        setFormData({
-            ...formData,
+        setFormData((previous) => ({
+            ...previous,
             [name]: value
-        });
+        }));
 
     };
 
+
     const handleSubmit = async (event) => {
+
         event.preventDefault();
+
         setError("");
-        // Validation
-        if (!formData.title.trim()) {
-            setError("Title is required.");
+        setSuccess("");
+
+
+        // Basic validation
+
+        if (
+            !formData.title.trim() ||
+            !formData.amount ||
+            !formData.category ||
+            !formData.date ||
+            !formData.paymentMethod
+        ) {
+
+            setError("Please fill in all required fields.");
+
             return;
         }
-        if (!formData.amount || Number(formData.amount) <= 0) {
+
+
+        if (Number(formData.amount) <= 0) {
+
             setError("Amount must be greater than 0.");
+
             return;
         }
 
-        if (!formData.date) {
-            setError("Date is required.");
-            return;
-        }
-
-        setLoading(true);
 
         try {
+
+            setLoading(true);
 
             const token = localStorage.getItem("token");
 
             if (!token) {
+
                 setError("Please login first.");
+
                 return;
             }
 
+
+            const expenseData = {
+                title: formData.title.trim(),
+
+                amount: Number(formData.amount),
+
+                category: formData.category,
+
+                date: formData.date,
+
+                paymentMethod: formData.paymentMethod,
+
+                notes: formData.notes.trim()
+            };
+
+
             await createExpense(
-                {
-                    ...formData,
-                    amount: Number(formData.amount)
-                },
+                expenseData,
                 token
             );
 
-            navigate("/expenses");
+
+            setSuccess(
+                "Expense added successfully."
+            );
+
+
+            setTimeout(() => {
+
+                navigate("/expenses");
+
+            }, 700);
+
 
         } catch (error) {
 
@@ -74,7 +129,7 @@ function AddExpense() {
 
             setError(
                 error.response?.data?.message ||
-                "Failed to create expense."
+                "Failed to add expense."
             );
 
         } finally {
@@ -82,159 +137,365 @@ function AddExpense() {
             setLoading(false);
 
         }
+
     };
 
+
     return (
-        <div className="container">
 
-            <h1>Add Expense</h1>
+        <div className="add-expense-page">
 
-            {error && (
-                <p>{error}</p>
-            )}
-
-            <form onSubmit={handleSubmit}>
-
-                {/* Title */}
-
-                <div>
-                    <label>Title</label>
-
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                        placeholder="Enter expense title"
-                    />
-                </div>
+            <div className="add-expense-container">
 
 
-                {/* Amount */}
+                {/* Header */}
 
-                <div>
-                    <label>Amount</label>
+                <div className="add-expense-header">
 
-                    <input
-                        type="number"
-                        name="amount"
-                        value={formData.amount}
-                        onChange={handleChange}
-                        placeholder="Enter amount"
-                        min="0"
-                        step="0.01"
-                    />
-                </div>
+                    <div>
 
-                {/* Category */}
+                        <p className="add-expense-label">
+                            PERSONAL FINANCE
+                        </p>
 
-                <div>
-                    <label>Category</label>
+                        <h1>
+                            Add Expense
+                        </h1>
 
-                    <select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
+                        <p className="add-expense-subtitle">
+                            Record a new expense and keep your
+                            spending organized.
+                        </p>
+
+                    </div>
+
+
+                    <Link
+                        to="/expenses"
+                        className="back-btn"
                     >
-                        <option value="Food">Food</option>
-                        <option value="Travel">Travel</option>
-                        <option value="Shopping">Shopping</option>
-                        <option value="Bills">Bills</option>
-                        <option value="Entertainment">
-                            Entertainment
-                        </option>
-                        <option value="Other">Other</option>
-                    </select>
+                        <ArrowLeftIcon />
+                        Back to Expenses
+                    </Link>
+
                 </div>
 
 
-                {/* Date */}
+                {/* Form */}
 
-                <div>
-                    <label>Date</label>
+                <div className="glass-card add-expense-card">
 
-                    <input
-                        type="date"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                    />
+                    <div className="form-heading">
+
+                        <div className="form-heading-icon">
+                            <CurrencyRupeeIcon />
+                        </div>
+
+                        <div>
+
+                            <p>
+                                NEW TRANSACTION
+                            </p>
+
+                            <h2>
+                                Expense Details
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    {error && (
+
+                        <div className="form-message error-message">
+                            {error}
+                        </div>
+
+                    )}
+
+
+                    {success && (
+
+                        <div className="form-message success-message">
+
+                            <CheckIcon />
+
+                            {success}
+
+                        </div>
+
+                    )}
+
+
+                    <form onSubmit={handleSubmit}>
+
+
+                        {/* Title */}
+
+                        <div className="form-group">
+
+                            <label htmlFor="title">
+                                Expense Title
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <DocumentTextIcon />
+
+                                <input
+                                    id="title"
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    placeholder="e.g. Grocery shopping"
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Amount */}
+
+                        <div className="form-group">
+
+                            <label htmlFor="amount">
+                                Amount
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <CurrencyRupeeIcon />
+
+                                <input
+                                    id="amount"
+                                    type="number"
+                                    name="amount"
+                                    value={formData.amount}
+                                    onChange={handleChange}
+                                    placeholder="0"
+                                    min="0"
+                                    step="0.01"
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        <div className="form-row">
+
+
+                            {/* Category */}
+
+                            <div className="form-group">
+
+                                <label htmlFor="category">
+                                    Category
+                                </label>
+
+                                <div className="input-wrapper">
+
+                                    <TagIcon />
+
+                                    <select
+                                        id="category"
+                                        name="category"
+                                        value={formData.category}
+                                        onChange={handleChange}
+                                    >
+
+                                        <option value="">
+                                            Select category
+                                        </option>
+
+                                        <option value="Food">
+                                            Food
+                                        </option>
+
+                                        <option value="Travel">
+                                            Travel
+                                        </option>
+
+                                        <option value="Shopping">
+                                            Shopping
+                                        </option>
+
+                                        <option value="Bills">
+                                            Bills
+                                        </option>
+
+                                        <option value="Entertainment">
+                                            Entertainment
+                                        </option>
+
+                                        <option value="Healthcare">
+                                            Healthcare
+                                        </option>
+
+                                        <option value="Education">
+                                            Education
+                                        </option>
+
+                                        <option value="Other">
+                                            Other
+                                        </option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+
+
+                            {/* Date */}
+
+                            <div className="form-group">
+
+                                <label htmlFor="date">
+                                    Date
+                                </label>
+
+                                <div className="input-wrapper">
+
+                                    <CalendarDaysIcon />
+
+                                    <input
+                                        id="date"
+                                        type="date"
+                                        name="date"
+                                        value={formData.date}
+                                        onChange={handleChange}
+                                    />
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Payment Method */}
+
+                        <div className="form-group">
+
+                            <label htmlFor="paymentMethod">
+                                Payment Method
+                            </label>
+
+                            <div className="input-wrapper">
+
+                                <CreditCardIcon />
+
+                                <select
+                                    id="paymentMethod"
+                                    name="paymentMethod"
+                                    value={formData.paymentMethod}
+                                    onChange={handleChange}
+                                >
+
+                                    <option value="">
+                                        Select payment method
+                                    </option>
+
+                                    <option value="Cash">
+                                        Cash
+                                    </option>
+
+                                    <option value="Credit Card">
+                                        Credit Card
+                                    </option>
+
+                                    <option value="Debit Card">
+                                        Debit Card
+                                    </option>
+
+                                    <option value="UPI">
+                                        UPI
+                                    </option>
+
+                                    <option value="Net Banking">
+                                        Net Banking
+                                    </option>
+
+                                    <option value="Other">
+                                        Other
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Notes */}
+
+                        <div className="form-group">
+
+                            <label htmlFor="notes">
+                                Notes
+                            </label>
+
+                            <div className="input-wrapper textarea-wrapper">
+
+                                <PencilSquareIcon />
+
+                                <textarea
+                                    id="notes"
+                                    name="notes"
+                                    value={formData.notes}
+                                    onChange={handleChange}
+                                    placeholder="Add any additional notes..."
+                                    rows="4"
+                                />
+
+                            </div>
+
+                        </div>
+
+
+                        {/* Buttons */}
+
+                        <div className="form-actions">
+
+                            <Link
+                                to="/expenses"
+                                className="cancel-btn"
+                            >
+                                Cancel
+                            </Link>
+
+
+                            <button
+                                type="submit"
+                                className="save-expense-btn"
+                                disabled={loading}
+                            >
+
+                                <CheckIcon />
+
+                                {loading
+                                    ? "Saving..."
+                                    : "Save Expense"
+                                }
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
                 </div>
 
-                {/* Payment Method */}
-
-                <div>
-                    <label>Payment Method</label>
-
-                    <select
-                        name="paymentMethod"
-                        value={formData.paymentMethod}
-                        onChange={handleChange}
-                    >
-                        <option value="Cash">
-                            Cash
-                        </option>
-
-                        <option value="Credit Card">
-                            Credit Card
-                        </option>
-
-                        <option value="Debit Card">
-                            Debit Card
-                        </option>
-
-                        <option value="UPI">
-                            UPI
-                        </option>
-
-                        <option value="Net Banking">
-                            Net Banking
-                        </option>
-
-                        <option value="Other">
-                            Other
-                        </option>
-                    </select>
-                </div>
-
-
-                {/* Notes */}
-
-                <div>
-                    <label>Notes</label>
-
-                    <textarea
-                        name="notes"
-                        value={formData.notes}
-                        onChange={handleChange}
-                        placeholder="Optional notes"
-                    />
-                </div>
-
-                {/* Submit */}
-
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading
-                        ? "Adding..."
-                        : "Add Expense"}
-                </button>
-
-                {/* Back */}
-
-                <button
-                    type="button"
-                    onClick={() => navigate("/expenses")}
-                >
-                    Back
-                </button>
-
-            </form>
+            </div>
 
         </div>
+
     );
+
 }
 
 export default AddExpense;
