@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { UserPlusIcon, EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import {
+    UserPlusIcon,
+    EyeIcon,
+    EyeSlashIcon
+} from "@heroicons/react/24/outline";
 import { registerUser } from "../services/authService";
 import "./Auth.css";
 
@@ -12,6 +16,7 @@ function Register() {
         email: "",
         password: "",
         confirmPassword: "",
+        monthlyIncome: "",
         monthlyBudget: ""
     });
 
@@ -37,28 +42,42 @@ function Register() {
         setError("");
         setSuccess("");
 
+        // Required fields
         if (
             !formData.name ||
             !formData.email ||
             !formData.password ||
             !formData.confirmPassword ||
+            formData.monthlyIncome === "" ||
             formData.monthlyBudget === ""
         ) {
             setError("Please fill in all required fields.");
             return;
         }
+
+        // Convert values to numbers
+        const income = Number(formData.monthlyIncome);
         const budget = Number(formData.monthlyBudget);
 
+        // Validate income
+        if (!Number.isFinite(income) || income < 0) {
+            setError("Please enter a valid monthly income.");
+            return;
+        }
+
+        // Validate budget
         if (!Number.isFinite(budget) || budget < 0) {
             setError("Please enter a valid monthly budget.");
             return;
         }
 
+        // Validate password match
         if (formData.password !== formData.confirmPassword) {
             setError("Passwords do not match.");
             return;
         }
 
+        // Validate password length
         if (formData.password.length < 6) {
             setError("Password must be at least 6 characters.");
             return;
@@ -71,7 +90,8 @@ function Register() {
                 name: formData.name,
                 email: formData.email,
                 password: formData.password,
-                monthlyBudget: Number(formData.monthlyBudget)
+                monthlyIncome: income,
+                monthlyBudget: budget
             });
 
             setSuccess(
@@ -90,6 +110,7 @@ function Register() {
                 error.response?.data?.message ||
                 "Registration failed. Please try again."
             );
+
         } finally {
             setLoading(false);
         }
@@ -108,6 +129,7 @@ function Register() {
                 </div>
 
                 <div className="auth-header">
+
                     <p className="auth-label">
                         PERSONAL FINANCE
                     </p>
@@ -119,6 +141,7 @@ function Register() {
                     <p>
                         Start managing your expenses today.
                     </p>
+
                 </div>
 
                 {error && (
@@ -134,6 +157,8 @@ function Register() {
                 )}
 
                 <form onSubmit={handleSubmit}>
+
+                    {/* NAME */}
 
                     <div className="auth-field">
 
@@ -153,6 +178,9 @@ function Register() {
 
                     </div>
 
+
+                    {/* EMAIL */}
+
                     <div className="auth-field">
 
                         <label htmlFor="email">
@@ -170,6 +198,9 @@ function Register() {
                         />
 
                     </div>
+
+
+                    {/* PASSWORD */}
 
                     <div className="auth-field">
 
@@ -210,6 +241,9 @@ function Register() {
                         </div>
 
                     </div>
+
+
+                    {/* CONFIRM PASSWORD */}
 
                     <div className="auth-field">
 
@@ -253,6 +287,31 @@ function Register() {
 
                     </div>
 
+
+                    {/* MONTHLY INCOME */}
+
+                    <div className="auth-field">
+
+                        <label htmlFor="monthlyIncome">
+                            Monthly Income
+                        </label>
+
+                        <input
+                            id="monthlyIncome"
+                            name="monthlyIncome"
+                            type="number"
+                            min="0"
+                            placeholder="Enter your monthly income"
+                            value={formData.monthlyIncome}
+                            onChange={handleChange}
+                            disabled={loading}
+                        />
+
+                    </div>
+
+
+                    {/* MONTHLY BUDGET */}
+
                     <div className="auth-field">
 
                         <label htmlFor="monthlyBudget">
@@ -272,6 +331,9 @@ function Register() {
 
                     </div>
 
+
+                    {/* SUBMIT */}
+
                     <button
                         type="submit"
                         className="auth-submit"
@@ -283,6 +345,9 @@ function Register() {
                     </button>
 
                 </form>
+
+
+                {/* FOOTER */}
 
                 <div className="auth-footer">
 
