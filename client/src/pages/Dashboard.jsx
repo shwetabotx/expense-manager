@@ -202,29 +202,37 @@ function Dashboard() {
 
     // Error screen
 
-    if (error) {
+   if (error) {
 
-        return (
+    return (
 
-            <div className="dashboard">
+        <div className="dashboard">
 
-                <div className="glass-card stat-card">
+            <div className="glass-card stat-card dashboard-error-card">
 
-                    <h2>
-                        Dashboard
-                    </h2>
+                <h2>
+                    Dashboard
+                </h2>
 
-                    <p>
-                        {error}
-                    </p>
+                <p>
+                    {error}
+                </p>
 
-                </div>
+                <button
+                    type="button"
+                    className="dashboard-login-btn"
+                    onClick={() => navigate("/login")}
+                >
+                    Login
+                </button>
 
             </div>
 
-        );
+        </div>
 
-    }
+    );
+
+}
 
 
     return (

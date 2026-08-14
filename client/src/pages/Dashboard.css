@@ -1064,6 +1064,94 @@ body {
     }
 }
 
+/* 
+   DASHBOARD ERROR / LOGIN
+   */
+
+.dashboard-error-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 280px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+
+.dashboard-error-card h2 {
+    margin: 0 0 12px;
+
+    color: #edf2e4;
+
+    font-size: 26px;
+}
+
+
+.dashboard-error-card p {
+    margin: 0 0 24px;
+
+    color: #9da58e;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* Login button */
+
+.dashboard-login-btn {
+    min-width: 130px;
+    min-height: 44px;
+
+    padding: 11px 24px;
+
+    border-radius: 13px;
+
+    border: 1px solid rgba(151, 170, 91, 0.25);
+
+    background: rgba(106, 123, 57, 0.60);
+
+    color: #f7faef;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+.dashboard-login-btn:hover {
+    transform: translateY(-2px);
+
+    background: rgba(117, 137, 63, 0.80);
+
+    border-color: rgba(205, 218, 174, 0.30);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.20);
+}
+
+
+.dashboard-login-btn:active {
+    transform: translateY(0);
+}
+
 
 /* 
    RESPONSIVE — MOBILE
