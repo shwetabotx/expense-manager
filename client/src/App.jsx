@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import AddExpense from "./pages/AddExpense";
 import EditExpense from "./pages/EditExpense";
 import Dashboard from "./pages/Dashboard";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
         <Route
           path="/dashboard"
           element={<Dashboard />}
+        />
+
+        <Route
+          path="/register"
+          element={<Register />}
         />
 
       </Routes>
