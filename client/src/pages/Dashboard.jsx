@@ -1,75 +1,151 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 import {
-    ArrowTrendingDownIcon, ArrowTrendingUpIcon, WalletIcon, CalendarDaysIcon, PlusIcon, ChartPieIcon, ChartBarIcon, ExclamationTriangleIcon
+    ArrowTrendingDownIcon,
+    ArrowTrendingUpIcon,
+    WalletIcon,
+    CalendarDaysIcon,
+    PlusIcon,
+    ChartPieIcon,
+    ChartBarIcon,
+    ExclamationTriangleIcon,
+    UserCircleIcon,
+    ArrowRightOnRectangleIcon
 } from "@heroicons/react/24/outline";
+
 import {
     getDashboard,
     getExpensesByCategory,
     getExpensesByMonth
 } from "../services/dashboardService";
-import "./Dashboard.css";
+
 import {
-    PieChart, Pie, Cell, Tooltip, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid
+    PieChart,
+    Pie,
+    Cell,
+    Tooltip,
+    ResponsiveContainer,
+    BarChart,
+    Bar,
+    XAxis,
+    YAxis,
+    CartesianGrid
 } from "recharts";
 
+import "./Dashboard.css";
+
+
 function Dashboard() {
+
+    const navigate = useNavigate();
+
+
+    // Dashboard data
+
     const [dashboardData, setDashboardData] = useState({
         totalExpenses: 0,
         monthlyExpenses: 0,
-        monthlyBudget: 30000,
-        currentBalance: 30000
+        monthlyBudget: 0,
+        currentBalance: 0
     });
-    
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+
+
+    // Chart data
+
     const [categoryData, setCategoryData] = useState([]);
+
     const [monthlyData, setMonthlyData] = useState([]);
+
+
+    // Loading and error
+
+    const [loading, setLoading] = useState(true);
+
+    const [error, setError] = useState("");
+
+
+    // Load dashboard
 
     const loadDashboard = async () => {
 
         try {
+
             setLoading(true);
+
             setError("");
+
+
             const token = localStorage.getItem("token");
+
+
             if (!token) {
+
                 setError("Please login first.");
+
                 return;
+
             }
+
+
             const [
                 dashboardResponse,
                 categoryResponse,
                 monthlyResponse
             ] = await Promise.all([
+
                 getDashboard(token),
+
                 getExpensesByCategory(token),
+
                 getExpensesByMonth(token)
+
             ]);
+
+
             setDashboardData(
                 dashboardResponse.data.data
             );
+
+
             setCategoryData(
                 categoryResponse.data.data
             );
+
+
             setMonthlyData(
                 monthlyResponse.data.data
             );
+
+
         } catch (error) {
+
             console.error(error);
+
+
             setError(
                 error.response?.data?.message ||
                 "Failed to load dashboard."
             );
+
+
         } finally {
+
             setLoading(false);
+
         }
+
     };
 
+
     useEffect(() => {
+
         loadDashboard();
 
     }, []);
 
+
+    // Budget percentage
 
     const budgetPercentage =
         dashboardData.monthlyBudget > 0
@@ -82,16 +158,31 @@ function Dashboard() {
             )
             : 0;
 
-    // REMAINING BUDGET
+
+    // Remaining budget
 
     const remainingBudget =
         dashboardData.monthlyBudget -
         dashboardData.monthlyExpenses;
 
 
+    // Logout
+
+    const handleLogout = () => {
+
+        localStorage.removeItem("token");
+
+        navigate("/login");
+
+    };
+
+
+    // Loading screen
+
     if (loading) {
 
         return (
+
             <div className="dashboard">
 
                 <div className="glass-card stat-card">
@@ -103,12 +194,18 @@ function Dashboard() {
                 </div>
 
             </div>
+
         );
+
     }
+
+
+    // Error screen
 
     if (error) {
 
         return (
+
             <div className="dashboard">
 
                 <div className="glass-card stat-card">
@@ -124,7 +221,9 @@ function Dashboard() {
                 </div>
 
             </div>
+
         );
+
     }
 
 
@@ -132,7 +231,11 @@ function Dashboard() {
 
         <div className="dashboard">
 
+
+            {/* Header */}
+
             <div className="dashboard-header">
+
 
                 <div>
 
@@ -151,30 +254,61 @@ function Dashboard() {
                 </div>
 
 
+                {/* Header Actions */}
+
                 <div className="dashboard-actions">
 
                     <Link
                         to="/expenses"
-                        className="view-expenses-btn"
+                        className="view-expenses-btn dashboard-main-btn"
                     >
                         View All Expenses
                     </Link>
 
-
                     <Link
                         to="/expenses/add"
-                        className="add-expense-btn"
+                        className="add-expense-btn dashboard-main-btn"
                     >
                         <PlusIcon className="btn-icon" />
-
                         Add Expense
                     </Link>
+
+                    <Link
+                        to="/profile"
+                        className="profile-btn"
+                        title="Profile"
+                    >
+                        <span className="profile-icon-circle">
+                            <UserCircleIcon />
+                        </span>
+                        <span className="profile-text">
+                            Profile
+                        </span>
+                    </Link>
+
+                    <button
+                        type="button"
+                        className="logout-btn"
+                        title="Logout"
+                        onClick={() => {
+                            localStorage.removeItem("token");
+                            navigate("/login");
+                        }}
+                    >
+                        <ArrowRightOnRectangleIcon />
+                    </button>
 
                 </div>
 
             </div>
 
+
+            {/* Statistics */}
+
             <div className="stats-grid">
+
+
+                {/* Total Income */}
 
                 <div className="glass-card stat-card">
 
@@ -209,6 +343,8 @@ function Dashboard() {
 
                 </div>
 
+
+                {/* Total Expenses */}
 
                 <div className="glass-card stat-card">
 
@@ -248,6 +384,9 @@ function Dashboard() {
 
                 </div>
 
+
+                {/* Current Balance */}
+
                 <div className="glass-card stat-card">
 
                     <div className="stat-top">
@@ -285,6 +424,9 @@ function Dashboard() {
                     </p>
 
                 </div>
+
+
+                {/* Monthly Expenses */}
 
                 <div className="glass-card stat-card">
 
@@ -327,6 +469,9 @@ function Dashboard() {
 
             </div>
 
+
+            {/* Monthly Budget */}
+
             <div className="glass-card budget-card">
 
 
@@ -363,7 +508,6 @@ function Dashboard() {
                     </div>
 
 
-
                     <div className="budget-remaining">
 
                         <span>
@@ -371,7 +515,13 @@ function Dashboard() {
                         </span>
 
 
-                        <strong>
+                        <strong
+                            className={
+                                remainingBudget < 0
+                                    ? "budget-danger"
+                                    : ""
+                            }
+                        >
 
                             ₹
                             {remainingBudget.toLocaleString(
@@ -385,6 +535,9 @@ function Dashboard() {
 
                 </div>
 
+
+                {/* Progress */}
+
                 <div className="budget-progress">
 
                     <div
@@ -396,25 +549,41 @@ function Dashboard() {
 
                 </div>
 
+
+                {/* Footer */}
+
                 <div className="budget-footer">
 
                     <span>
-                        ₹{dashboardData.monthlyExpenses.toLocaleString("en-IN")} spent
+
+                        ₹
+                        {dashboardData.monthlyExpenses.toLocaleString(
+                            "en-IN"
+                        )}
+                        {" "}spent
+
                     </span>
 
+
                     <span>
+
                         {Math.round(budgetPercentage)}%
+
                     </span>
 
                 </div>
 
+
+                {/* Budget Warning */}
 
                 {dashboardData.monthlyExpenses >
                     dashboardData.monthlyBudget && (
 
                         <div className="budget-warning">
 
-                            <ExclamationTriangleIcon className="warning-icon" />
+                            <ExclamationTriangleIcon
+                                className="warning-icon"
+                            />
 
                             <span>
                                 You have exceeded your monthly budget.
@@ -424,10 +593,16 @@ function Dashboard() {
 
                     )}
 
+
             </div>
 
 
+            {/* Charts */}
+
             <div className="charts-grid">
+
+
+                {/* Category Chart */}
 
                 <div className="glass-card chart-card">
 
@@ -447,20 +622,29 @@ function Dashboard() {
 
                         </div>
 
-                        <div className="chart-icon">
-                            <ChartPieIcon />
-                        </div>
-                    </div>
 
+                        <div className="chart-icon">
+
+                            <ChartPieIcon />
+
+                        </div>
+
+                    </div>
 
 
                     <div className="chart-container">
 
+
                         {categoryData.length === 0 ? (
 
                             <div className="empty-chart">
+
                                 <ChartPieIcon />
-                                <p>No expense data available</p>
+
+                                <p>
+                                    No expense data available
+                                </p>
+
                             </div>
 
                         ) : (
@@ -488,16 +672,14 @@ function Dashboard() {
 
                                                 <Cell
                                                     key={`cell-${index}`}
-                                                    fill={
-                                                        [
-                                                            "#8a9a5b",
-                                                            "#a3b86c",
-                                                            "#6f7f45",
-                                                            "#c1cf8a",
-                                                            "#596638",
-                                                            "#d4dda8"
-                                                        ][index % 6]
-                                                    }
+                                                    fill={[
+                                                        "#8a9a5b",
+                                                        "#a3b86c",
+                                                        "#6f7f45",
+                                                        "#c1cf8a",
+                                                        "#596638",
+                                                        "#d4dda8"
+                                                    ][index % 6]}
                                                 />
 
                                             )
@@ -505,13 +687,18 @@ function Dashboard() {
 
                                     </Pie>
 
+
                                     <Tooltip
                                         formatter={(value) =>
-                                            `₹${Number(value).toLocaleString("en-IN")}`
+                                            `₹${Number(value).toLocaleString(
+                                                "en-IN"
+                                            )}`
                                         }
                                         contentStyle={{
-                                            background: "rgba(30, 40, 20, 0.9)",
-                                            border: "1px solid rgba(200, 215, 170, 0.2)",
+                                            background:
+                                                "rgba(30, 40, 20, 0.9)",
+                                            border:
+                                                "1px solid rgba(200, 215, 170, 0.2)",
                                             borderRadius: "12px",
                                             color: "#f1f5e9"
                                         }}
@@ -527,6 +714,9 @@ function Dashboard() {
 
 
                 </div>
+
+
+                {/* Monthly Chart */}
 
                 <div className="glass-card chart-card">
 
@@ -553,16 +743,22 @@ function Dashboard() {
 
                         </div>
 
-
                     </div>
 
+
                     <div className="chart-container">
+
 
                         {monthlyData.length === 0 ? (
 
                             <div className="empty-chart">
+
                                 <ChartBarIcon />
-                                <p>No monthly data available</p>
+
+                                <p>
+                                    No monthly data available
+                                </p>
+
                             </div>
 
                         ) : (
@@ -581,6 +777,7 @@ function Dashboard() {
                                         vertical={false}
                                     />
 
+
                                     <XAxis
                                         dataKey="month"
                                         stroke="#94a3b8"
@@ -588,28 +785,40 @@ function Dashboard() {
                                         tickLine={false}
                                     />
 
+
                                     <YAxis
                                         stroke="#94a3b8"
                                         axisLine={false}
                                         tickLine={false}
                                     />
 
+
                                     <Tooltip
                                         formatter={(value) =>
-                                            `₹${Number(value).toLocaleString("en-IN")}`
+                                            `₹${Number(value).toLocaleString(
+                                                "en-IN"
+                                            )}`
                                         }
                                         contentStyle={{
-                                            background: "rgba(30, 40, 20, 0.9)",
-                                            border: "1px solid rgba(200, 215, 170, 0.2)",
+                                            background:
+                                                "rgba(30, 40, 20, 0.9)",
+                                            border:
+                                                "1px solid rgba(200, 215, 170, 0.2)",
                                             borderRadius: "12px",
                                             color: "#f1f5e9"
                                         }}
                                     />
 
+
                                     <Bar
                                         dataKey="total"
                                         fill="#8a9a5b"
-                                        radius={[8, 8, 0, 0]}
+                                        radius={[
+                                            8,
+                                            8,
+                                            0,
+                                            0
+                                        ]}
                                     />
 
                                 </BarChart>
@@ -627,7 +836,9 @@ function Dashboard() {
 
 
         </div>
+
     );
+
 }
 
 

@@ -15,7 +15,11 @@ body,
 body {
     overflow-x: hidden;
 }
-/*Dashboard**/
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 .dashboard {
     width: 100%;
@@ -47,16 +51,16 @@ body {
 }
 
 
-/*Header*/
+/* =========================================================
+   DASHBOARD HEADER
+========================================================= */
 
 .dashboard-header {
     width: 100%;
 
     display: flex;
-
-    justify-content: space-between;
-
     align-items: flex-end;
+    justify-content: space-between;
 
     margin-bottom: 35px;
 }
@@ -65,21 +69,18 @@ body {
     margin: 0 0 8px;
 
     font-size: 11px;
+    font-weight: 700;
 
     letter-spacing: 3px;
 
     color: #a9b879;
-
-    font-weight: 700;
 }
 
 .dashboard-header h1 {
     margin: 0;
 
     font-size: 40px;
-
     line-height: 1.1;
-
     font-weight: 700;
 
     letter-spacing: -1px;
@@ -90,88 +91,289 @@ body {
 .dashboard-subtitle {
     margin: 9px 0 0;
 
-    color: #a7ad99;
-
     font-size: 15px;
+
+    color: #a7ad99;
 }
 
 
-/*Add expense button*/
+/* =========================================================
+   DASHBOARD ACTIONS
+========================================================= */
 
-.add-expense-btn {
-    display: inline-flex;
-
+.dashboard-actions {
+    display: flex;
     align-items: center;
+    gap: 12px;
+}
 
+
+/* =========================================================
+   MAIN HEADER BUTTONS
+========================================================= */
+
+.view-expenses-btn,
+.add-expense-btn {
+    height: 52px;
+
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
 
     gap: 9px;
 
-    padding: 13px 20px;
+    padding: 0 22px;
 
-    border-radius: 15px;
+    border-radius: 16px;
+
+    box-sizing: border-box;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
 
     text-decoration: none;
 
-    color: #f7f9ed;
+    white-space: nowrap;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+/* =========================================================
+   VIEW ALL EXPENSES
+========================================================= */
+
+.view-expenses-btn {
+    min-width: 190px;
+
+    color: #d9dfc4;
+
+    background: rgba(255, 255, 255, 0.045);
+
+    border: 1px solid rgba(180, 195, 130, 0.18);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.04),
+        0 8px 25px rgba(0, 0, 0, 0.12);
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+}
+
+.view-expenses-btn:hover {
+    color: #f1f5e9;
+
+    background: rgba(255, 255, 255, 0.075);
+
+    border-color: rgba(180, 195, 130, 0.30);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   ADD EXPENSE
+========================================================= */
+
+.add-expense-btn {
+    min-width: 190px;
+
+    color: #f7f9ef;
 
     background:
         linear-gradient(
             135deg,
-            rgba(133, 151, 62, 0.75),
-            rgba(83, 98, 38, 0.65)
+            rgba(138, 154, 91, 0.95),
+            rgba(88, 105, 45, 0.95)
         );
 
-    border: 1px solid
-        rgba(196, 211, 125, 0.25);
-
-    backdrop-filter: blur(20px);
-
-    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(190, 210, 120, 0.35);
 
     box-shadow:
-        0 12px 35px
-        rgba(0, 0, 0, 0.3),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.15);
-
-    transition: all 0.25s ease;
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 10px 30px rgba(70, 85, 30, 0.25);
 }
 
 .add-expense-btn:hover {
-    transform: translateY(-3px);
-
     color: #ffffff;
 
     background:
         linear-gradient(
             135deg,
-            rgba(151, 170, 72, 0.9),
-            rgba(99, 116, 45, 0.85)
+            rgba(153, 170, 101, 1),
+            rgba(100, 120, 52, 1)
         );
 
-    border-color:
-        rgba(214, 226, 151, 0.4);
+    transform: translateY(-2px);
 
     box-shadow:
-        0 16px 40px
-        rgba(0, 0, 0, 0.4),
-
-        0 0 25px
-        rgba(143, 160, 70, 0.15);
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 14px 35px rgba(70, 85, 30, 0.35);
 }
 
 .btn-icon {
-    width: 20px;
-    height: 20px;
+    width: 21px;
+    height: 21px;
+
+    flex-shrink: 0;
 }
 
 
-/*Glass Card*/
+/* =========================================================
+   PROFILE
+   Round icon + text
+   No rectangular button background
+========================================================= */
+
+.profile-btn {
+    height: 52px;
+
+    display: inline-flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 8px;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #c7d1a5;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 500;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Round profile icon */
+
+.profile-btn svg {
+    width: 48px;
+    height: 48px;
+
+    padding: 10px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    color: #c5d47d;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(166, 185, 92, 0.15),
+            rgba(255, 255, 255, 0.025)
+        );
+
+    border: 1px solid rgba(166, 185, 92, 0.55);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 0 20px rgba(138, 154, 91, 0.08);
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.profile-btn:hover {
+    color: #f1f5e9;
+
+    transform: translateY(-2px);
+}
+
+.profile-btn:hover svg {
+    color: #d6e58c;
+
+    border-color: rgba(190, 210, 110, 0.8);
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            rgba(166, 185, 92, 0.22),
+            rgba(255, 255, 255, 0.035)
+        );
+}
+
+
+/* =========================================================
+   LOGOUT
+   Only icon — no background, no border, no shape
+========================================================= */
+
+.logout-btn {
+    width: 44px;
+    height: 52px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #c9a7a0;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.logout-btn svg {
+    width: 26px;
+    height: 26px;
+
+    flex-shrink: 0;
+}
+
+.logout-btn:hover {
+    color: #efaaa5;
+
+    transform: translateY(-2px);
+}
+
+.logout-btn:focus-visible {
+    outline: 2px solid rgba(200, 215, 150, 0.6);
+    outline-offset: 4px;
+
+    border-radius: 6px;
+}
+
+
+/* =========================================================
+   GLASS CARD
+========================================================= */
 
 .glass-card {
     width: 100%;
+
+    position: relative;
+
+    overflow: hidden;
 
     background:
         linear-gradient(
@@ -180,33 +382,17 @@ body {
             rgba(255, 255, 255, 0.035)
         );
 
-    border:
-        1px solid
-        rgba(211, 221, 169, 0.15);
-
-    backdrop-filter:
-        blur(24px)
-        saturate(140%);
-
-    -webkit-backdrop-filter:
-        blur(24px)
-        saturate(140%);
+    border: 1px solid rgba(211, 221, 169, 0.15);
 
     border-radius: 24px;
 
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+
     box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, 0.30),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.10),
-
-        inset 0 -1px 0
-        rgba(0, 0, 0, 0.15);
-
-    position: relative;
-
-    overflow: hidden;
+        0 25px 70px rgba(0, 0, 0, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 }
 
 
@@ -235,7 +421,9 @@ body {
 }
 
 
-/*Stats*/
+/* =========================================================
+   STATS
+========================================================= */
 
 .stats-grid {
     width: 100%;
@@ -266,28 +454,24 @@ body {
         rgba(196, 211, 125, 0.28);
 
     box-shadow:
-        0 30px 70px
-        rgba(0, 0, 0, 0.38),
-
-        0 0 30px
-        rgba(128, 145, 55, 0.08),
-
-        inset 0 1px 0
-        rgba(255, 255, 255, 0.12);
+        0 30px 70px rgba(0, 0, 0, 0.38),
+        0 0 30px rgba(128, 145, 55, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .stat-top {
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
+    justify-content: space-between;
 
     margin-bottom: 26px;
 }
 
 
-/*Icons*/
+/* =========================================================
+   STAT ICONS
+========================================================= */
 
 .icon-box {
     width: 48px;
@@ -300,8 +484,7 @@ body {
 
     border-radius: 15px;
 
-    border: 1px solid
-        rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     backdrop-filter: blur(10px);
 }
@@ -315,22 +498,19 @@ body {
 /* Income */
 
 .income-icon {
-    background:
-        rgba(132, 153, 58, 0.20);
+    background: rgba(132, 153, 58, 0.20);
 
     color: #c2d56d;
 
     box-shadow:
-        0 0 25px
-        rgba(145, 164, 64, 0.10);
+        0 0 25px rgba(145, 164, 64, 0.10);
 }
 
 
 /* Expenses */
 
 .expense-icon {
-    background:
-        rgba(181, 119, 85, 0.15);
+    background: rgba(181, 119, 85, 0.15);
 
     color: #d99b7d;
 }
@@ -339,8 +519,7 @@ body {
 /* Balance */
 
 .balance-icon {
-    background:
-        rgba(111, 126, 73, 0.18);
+    background: rgba(111, 126, 73, 0.18);
 
     color: #b8c984;
 }
@@ -349,28 +528,30 @@ body {
 /* Monthly */
 
 .monthly-icon {
-    background:
-        rgba(164, 147, 65, 0.17);
+    background: rgba(164, 147, 65, 0.17);
 
     color: #d4c56e;
 }
 
 
+/* =========================================================
+   STAT TEXT
+========================================================= */
+
 .stat-tag {
-    font-size: 11px;
-
-    color: #aeb59c;
-
     padding: 6px 11px;
 
     border-radius: 20px;
+
+    font-size: 11px;
+
+    color: #aeb59c;
 
     background:
         rgba(255, 255, 255, 0.055);
 
     border:
-        1px solid
-        rgba(255, 255, 255, 0.06);
+        1px solid rgba(255, 255, 255, 0.06);
 
     backdrop-filter: blur(8px);
 }
@@ -387,7 +568,6 @@ body {
     margin: 0;
 
     font-size: 29px;
-
     font-weight: 700;
 
     color: #f2f4e9;
@@ -402,7 +582,9 @@ body {
 }
 
 
-/*Budget*/
+/* =========================================================
+   BUDGET
+========================================================= */
 
 .budget-card {
     padding: 30px;
@@ -413,9 +595,8 @@ body {
 .budget-header {
     display: flex;
 
-    justify-content: space-between;
-
     align-items: center;
+    justify-content: space-between;
 
     margin-bottom: 22px;
 }
@@ -437,6 +618,8 @@ body {
     align-items: center;
     justify-content: center;
 
+    flex-shrink: 0;
+
     border-radius: 15px;
 
     background:
@@ -445,44 +628,19 @@ body {
     color: #b9cc69;
 
     border:
-        1px solid
-        rgba(185, 204, 105, 0.12);
+        1px solid rgba(185, 204, 105, 0.12);
 
     box-shadow:
-        0 0 25px
-        rgba(132, 151, 55, 0.08);
-}
-
-.budget-warning {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    margin-top: 18px;
-    padding: 12px 15px;
-
-    border-radius: 12px;
-
-    color: #e5c97a;
-
-    background: rgba(180, 150, 55, 0.10);
-
-    border: 1px solid rgba(190, 165, 75, 0.18);
-
-    font-size: 13px;
-}
-
-.warning-icon {
-    width: 20px;
-    height: 20px;
-
-    flex-shrink: 0;
+        0 0 25px rgba(132, 151, 55, 0.08);
 }
 
 .section-icon svg {
     width: 24px;
     height: 24px;
 }
+
+
+/* Budget labels */
 
 .budget-label,
 .chart-label {
@@ -491,10 +649,9 @@ body {
     color: #8f997d;
 
     font-size: 11px;
+    font-weight: 700;
 
     letter-spacing: 1.7px;
-
-    font-weight: 700;
 }
 
 .budget-header h2 {
@@ -523,16 +680,16 @@ body {
     color: #bdd46b;
 
     text-shadow:
-        0 0 15px
-        rgba(189, 212, 107, 0.15);
+        0 0 15px rgba(189, 212, 107, 0.15);
 }
 
 
-/*Budget Process*/
+/* =========================================================
+   BUDGET PROGRESS
+========================================================= */
 
 .budget-progress {
     width: 100%;
-
     height: 11px;
 
     overflow: hidden;
@@ -543,12 +700,10 @@ body {
         rgba(255, 255, 255, 0.07);
 
     border:
-        1px solid
-        rgba(255, 255, 255, 0.05);
+        1px solid rgba(255, 255, 255, 0.05);
 
     box-shadow:
-        inset 0 2px 5px
-        rgba(0, 0, 0, 0.25);
+        inset 0 2px 5px rgba(0, 0, 0, 0.25);
 }
 
 .budget-progress-fill {
@@ -565,8 +720,7 @@ body {
         );
 
     box-shadow:
-        0 0 18px
-        rgba(174, 199, 80, 0.28);
+        0 0 18px rgba(174, 199, 80, 0.28);
 
     transition:
         width 0.5s ease;
@@ -585,7 +739,45 @@ body {
 }
 
 
-/* Charts */
+/* =========================================================
+   BUDGET WARNING
+========================================================= */
+
+.budget-warning {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+    padding: 12px 15px;
+
+    border-radius: 12px;
+
+    color: #e5c97a;
+
+    background:
+        rgba(180, 150, 55, 0.10);
+
+    border:
+        1px solid rgba(190, 165, 75, 0.18);
+
+    font-size: 13px;
+}
+
+.warning-icon {
+    width: 20px;
+    height: 20px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   CHARTS
+========================================================= */
 
 .charts-grid {
     width: 100%;
@@ -599,242 +791,10 @@ body {
 }
 
 .chart-card {
+    min-height: 370px;
+
     padding: 27px;
 
-    min-height: 370px;
-}
-
-.chart-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-}
-
-.chart-header h2 {
-    margin: 0;
-
-    font-size: 20px;
-
-    color: #eef1e4;
-}
-
-.chart-icon {
-    width: 45px;
-    height: 45px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    background:
-        rgba(140, 158, 66, 0.12);
-
-    color: #b7ca6b;
-
-    border:
-        1px solid
-        rgba(191, 208, 112, 0.10);
-}
-
-.chart-icon svg {
-    width: 23px;
-    height: 23px;
-}
-
-.chart-placeholder {
-    min-height: 280px;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    color: #68715d;
-}
-
-.chart-placeholder svg {
-    width: 55px;
-    height: 55px;
-
-    margin-bottom: 12px;
-
-    color: #65714f;
-
-    opacity: 0.8;
-}
-
-
-/*Olive Accents*/
-
-.dashboard strong {
-    color: #c1d66d;
-}
-
-
-/* scrollbar */
-
-.dashboard::-webkit-scrollbar {
-    width: 8px;
-}
-
-.dashboard::-webkit-scrollbar-track {
-    background: #10130d;
-}
-
-.dashboard::-webkit-scrollbar-thumb {
-    background:
-        rgba(137, 155, 62, 0.45);
-
-    border-radius: 20px;
-}
-
-.dashboard::-webkit-scrollbar-thumb:hover {
-    background:
-        rgba(164, 184, 78, 0.65);
-}
-
-
-.chart-container {
-    width: 100%;
-    height: 280px;
-
-    margin-top: 20px;
-}
-
-
-.empty-chart {
-    width: 100%;
-    height: 280px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    color: #64748b;
-}
-
-
-.empty-chart svg {
-    width: 50px;
-    height: 50px;
-
-    margin-bottom: 12px;
-
-    color: #596638;
-}
-
-
-.recharts-tooltip-label {
-    color: #d9e2c2 !important;
-}
-
-/* ========================================
-   DASHBOARD CHARTS
-======================================== */
-
-.chart-container {
-    width: 100%;
-    height: 300px;
-    margin-top: 20px;
-}
-
-
-/* Chart glass area */
-
-.chart-container > div {
-    width: 100% !important;
-}
-
-
-/* Empty chart */
-
-.empty-chart {
-    height: 280px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    color: #8d9875;
-
-    border-radius: 18px;
-
-    background: rgba(255, 255, 255, 0.025);
-
-    border: 1px solid rgba(190, 205, 150, 0.06);
-}
-
-.empty-chart svg {
-    width: 48px;
-    height: 48px;
-
-    margin-bottom: 12px;
-
-    color: #71804d;
-}
-
-
-/* Recharts */
-
-.recharts-wrapper {
-    font-family: inherit;
-}
-
-.recharts-cartesian-axis-tick-value {
-    fill: #8f9a7c;
-    font-size: 12px;
-}
-
-.recharts-cartesian-grid line {
-    stroke: rgba(210, 220, 180, 0.06);
-}
-
-
-/* Tooltip */
-
-.recharts-tooltip-wrapper {
-    outline: none;
-}
-
-.recharts-default-tooltip {
-    background: rgba(30, 38, 22, 0.92) !important;
-
-    border: 1px solid rgba(190, 205, 150, 0.15) !important;
-
-    border-radius: 14px !important;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.35);
-}
-
-
-/* Pie chart hover */
-
-.recharts-sector {
-    transition:
-        opacity 0.2s ease,
-        transform 0.2s ease;
-}
-
-.recharts-sector:hover {
-    opacity: 0.8;
-}
-
-
-/* Chart card */
-
-.chart-card {
     overflow: hidden;
 
     background:
@@ -867,9 +827,43 @@ body {
 }
 
 
-/* Chart icon */
+/* =========================================================
+   CHART HEADER
+========================================================= */
+
+.chart-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chart-header h2 {
+    margin: 0;
+
+    font-size: 20px;
+
+    color: #eef1e4;
+}
+
+
+/* =========================================================
+   CHART ICON
+========================================================= */
 
 .chart-icon {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 14px;
+
     background:
         rgba(126, 143, 78, 0.13);
 
@@ -882,16 +876,157 @@ body {
         inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
+.chart-icon svg {
+    width: 23px;
+    height: 23px;
+}
 
-/*Mobile*/
 
-@media (max-width: 768px) {
+/* =========================================================
+   CHART CONTAINER
+========================================================= */
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+
+    margin-top: 20px;
+}
+
+.chart-container > div {
+    width: 100% !important;
+}
+
+
+/* =========================================================
+   EMPTY CHART
+========================================================= */
+
+.empty-chart {
+    width: 100%;
+    height: 280px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #8d9875;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.025);
+
+    border:
+        1px solid rgba(190, 205, 150, 0.06);
+}
+
+.empty-chart svg {
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 12px;
+
+    color: #71804d;
+}
+
+
+/* =========================================================
+   RECHARTS
+========================================================= */
+
+.recharts-wrapper {
+    font-family: inherit;
+}
+
+.recharts-cartesian-axis-tick-value {
+    fill: #8f9a7c;
+
+    font-size: 12px;
+}
+
+.recharts-cartesian-grid line {
+    stroke:
+        rgba(210, 220, 180, 0.06);
+}
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.recharts-default-tooltip {
+    background:
+        rgba(30, 38, 22, 0.92) !important;
+
+    border:
+        1px solid rgba(190, 205, 150, 0.15) !important;
+
+    border-radius: 14px !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.recharts-tooltip-label {
+    color: #d9e2c2 !important;
+}
+
+.recharts-sector {
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.recharts-sector:hover {
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   GENERAL OLIVE ACCENTS
+========================================================= */
+
+.dashboard strong {
+    color: #c1d66d;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.dashboard::-webkit-scrollbar {
+    width: 8px;
+}
+
+.dashboard::-webkit-scrollbar-track {
+    background: #10130d;
+}
+
+.dashboard::-webkit-scrollbar-thumb {
+    background:
+        rgba(137, 155, 62, 0.45);
+
+    border-radius: 20px;
+}
+
+.dashboard::-webkit-scrollbar-thumb:hover {
+    background:
+        rgba(164, 184, 78, 0.65);
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 900px) {
 
     .dashboard {
-        padding:
-            25px
-            18px
-            40px;
+        padding: 30px 25px 50px;
     }
 
     .dashboard-header {
@@ -902,14 +1037,75 @@ body {
         gap: 20px;
     }
 
+    .dashboard-actions {
+        width: 100%;
+
+        flex-wrap: wrap;
+    }
+
+    .view-expenses-btn,
+    .add-expense-btn {
+        flex: 1;
+
+        min-width: 170px;
+    }
+
+    .profile-btn {
+        flex-shrink: 0;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .dashboard {
+        padding: 25px 18px 40px;
+    }
+
     .dashboard-header h1 {
         font-size: 32px;
     }
 
-    .add-expense-btn {
+    .dashboard-actions {
         width: 100%;
 
-        box-sizing: border-box;
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 10px;
+    }
+
+    .view-expenses-btn,
+    .add-expense-btn {
+        width: 100%;
+        min-width: 0;
+
+        padding: 0 14px;
+
+        font-size: 14px;
+    }
+
+    .profile-btn {
+        justify-content: center;
+    }
+
+    .logout-btn {
+        width: 100%;
     }
 
     .stats-grid {
@@ -926,45 +1122,11 @@ body {
         gap: 20px;
     }
 
-}
+    .budget-header > div:first-child {
+        align-items: flex-start;
+    }
 
-.dashboard-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-
-.view-expenses-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    padding: 12px 18px;
-
-    border-radius: 14px;
-
-    text-decoration: none;
-
-    color: #d9e2c2;
-
-    background: rgba(255, 255, 255, 0.06);
-
-    border: 1px solid rgba(190, 205, 160, 0.16);
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    transition: all 0.25s ease;
-}
-
-
-.view-expenses-btn:hover {
-    color: #f1f5e9;
-
-    background: rgba(255, 255, 255, 0.11);
-
-    border-color: rgba(190, 205, 160, 0.28);
-
-    transform: translateY(-2px);
+    .budget-remaining {
+        text-align: right;
+    }
 }

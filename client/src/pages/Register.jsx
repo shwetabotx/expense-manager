@@ -12,7 +12,7 @@ function Register() {
         email: "",
         password: "",
         confirmPassword: "",
-        monthlyBudget: 30000
+        monthlyBudget: ""
     });
 
     const [showPassword, setShowPassword] = useState(false);
@@ -41,9 +41,16 @@ function Register() {
             !formData.name ||
             !formData.email ||
             !formData.password ||
-            !formData.confirmPassword
+            !formData.confirmPassword ||
+            formData.monthlyBudget === ""
         ) {
             setError("Please fill in all required fields.");
+            return;
+        }
+        const budget = Number(formData.monthlyBudget);
+
+        if (!Number.isFinite(budget) || budget < 0) {
+            setError("Please enter a valid monthly budget.");
             return;
         }
 
@@ -257,7 +264,7 @@ function Register() {
                             name="monthlyBudget"
                             type="number"
                             min="0"
-                            placeholder="30000"
+                            placeholder="Enter your monthly budget"
                             value={formData.monthlyBudget}
                             onChange={handleChange}
                             disabled={loading}

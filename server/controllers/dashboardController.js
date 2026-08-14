@@ -3,9 +3,9 @@ const Expense = require("../models/Expense");
 const User = require("../models/User");
 
 
-// ========================================
+
 // GET DASHBOARD
-// ========================================
+
 
 const getDashboard = async (req, res) => {
 
@@ -25,9 +25,9 @@ const getDashboard = async (req, res) => {
         }
 
 
-        // ========================================
+
         // TOTAL EXPENSES
-        // ========================================
+
 
         const totalExpensesResult = await Expense.aggregate([
 
@@ -57,9 +57,9 @@ const getDashboard = async (req, res) => {
 
 
 
-        // ========================================
+
         // THIS MONTH'S EXPENSES
-        // ========================================
+
 
         const now = new Date();
 
@@ -111,30 +111,16 @@ const getDashboard = async (req, res) => {
                 ? monthlyExpensesResult[0].total
                 : 0;
 
-
-
-        // ========================================
         // MONTHLY BUDGET
-        // ========================================
-
         const monthlyBudget =
-            user.monthlyBudget || 30000;
+            Number(user.monthlyBudget || 0);
 
-
-
-        // ========================================
         // CURRENT BALANCE
-        // ========================================
 
         const currentBalance =
             monthlyBudget - monthlyExpenses;
 
-
-
-        // ========================================
         // RESPONSE
-        // ========================================
-
         res.status(200).json({
 
             success: true,
@@ -175,9 +161,9 @@ const getDashboard = async (req, res) => {
 
 
 
-// ========================================
+
 // EXPENSES BY CATEGORY
-// ========================================
+
 
 const getExpensesByCategory = async (req, res) => {
 
@@ -259,9 +245,9 @@ const getExpensesByCategory = async (req, res) => {
 
 
 
-// ========================================
+
 // EXPENSES BY MONTH
-// ========================================
+
 
 const getExpensesByMonth = async (req, res) => {
 
@@ -382,9 +368,9 @@ const getExpensesByMonth = async (req, res) => {
 
 
 
-// ========================================
+
 // EXPORT
-// ========================================
+
 
 module.exports = {
 

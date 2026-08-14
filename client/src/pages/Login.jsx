@@ -1,6 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import {
+    ArrowRightOnRectangleIcon,
+    EyeIcon,
+    EyeSlashIcon
+} from "@heroicons/react/24/outline";
 import { loginUser } from "../services/authService";
+import "./Auth.css";
 
 function Login() {
 
@@ -11,27 +17,39 @@ function Login() {
         password: ""
     });
 
-    const [error, setError] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-    const handleChange = (event) => {
+    const handleChange = (e) => {
 
-        const { name, value } = event.target;
+        const { name, value } = e.target;
 
-        setFormData({
-            ...formData,
+        setFormData((prev) => ({
+            ...prev,
             [name]: value
-        });
+        }));
+
     };
 
-    const handleSubmit = async (event) => {
 
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+
+        e.preventDefault();
 
         setError("");
-        setLoading(true);
+
+        if (!formData.email || !formData.password) {
+
+            setError("Please enter your email and password.");
+
+            return;
+        }
 
         try {
+
+            setLoading(true);
 
             const response = await loginUser(formData);
 
@@ -47,7 +65,7 @@ function Login() {
 
             setError(
                 error.response?.data?.message ||
-                "Login failed."
+                "Invalid email or password."
             );
 
         } finally {
@@ -55,53 +73,176 @@ function Login() {
             setLoading(false);
 
         }
+
     };
 
+
     return (
-        <div className="container">
 
-            <h1>Login</h1>
+        <div className="auth-page">
 
-            {error && (
-                <p>{error}</p>
-            )}
+            {/* Background glow */}
 
-            <form onSubmit={handleSubmit}>
+            <div className="auth-glow auth-glow-one"></div>
 
-                <div>
-                    <label>Email</label>
+            <div className="auth-glow auth-glow-two"></div>
 
-                    <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
+
+            <div className="auth-card">
+
+                {/* Icon */}
+
+                <div className="auth-icon">
+
+                    <ArrowRightOnRectangleIcon />
+
                 </div>
 
-                <div>
-                    <label>Password</label>
 
-                    <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
+                {/* Header */}
+
+                <div className="auth-header">
+
+                    <p className="auth-label">
+                        PERSONAL FINANCE
+                    </p>
+
+                    <h1>
+                        Welcome Back
+                    </h1>
+
+                    <p>
+                        Login to manage your expenses.
+                    </p>
+
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading ? "Logging in..." : "Login"}
-                </button>
 
-            </form>
+                {/* Error */}
+
+                {error && (
+
+                    <div className="auth-message auth-error">
+                        {error}
+                    </div>
+
+                )}
+
+
+                {/* Form */}
+
+                <form onSubmit={handleSubmit}>
+
+                    {/* Email */}
+
+                    <div className="auth-field">
+
+                        <label htmlFor="email">
+                            Email
+                        </label>
+
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            disabled={loading}
+                            autoComplete="email"
+                        />
+
+                    </div>
+
+
+                    {/* Password */}
+
+                    <div className="auth-field">
+
+                        <label htmlFor="password">
+                            Password
+                        </label>
+
+                        <div className="password-wrapper">
+
+                            <input
+                                id="password"
+                                name="password"
+                                type={
+                                    showPassword
+                                        ? "text"
+                                        : "password"
+                                }
+                                placeholder="Enter your password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                disabled={loading}
+                                autoComplete="current-password"
+                            />
+
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() =>
+                                    setShowPassword(
+                                        !showPassword
+                                    )
+                                }
+                            >
+
+                                {showPassword ? (
+
+                                    <EyeSlashIcon />
+
+                                ) : (
+
+                                    <EyeIcon />
+
+                                )}
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* Login button */}
+
+                    <button
+                        type="submit"
+                        className="auth-submit"
+                        disabled={loading}
+                    >
+
+                        {loading
+                            ? "Logging in..."
+                            : "Login"
+                        }
+
+                    </button>
+
+                </form>
+
+
+                {/* Register */}
+
+                <div className="auth-footer">
+
+                    <span>
+                        Don't have an account?
+                    </span>
+
+                    <Link to="/register">
+                        Create Account
+                    </Link>
+
+                </div>
+
+            </div>
 
         </div>
+
     );
 }
 
