@@ -13,8 +13,11 @@ import {
 
 import { createExpense } from "../services/expenseService";
 import "./AddExpense.css";
+import AppShell from "../components/AppShell";
 
 function AddExpense() {
+
+    const today = new Date().toISOString().split("T")[0];
 
     const navigate = useNavigate();
 
@@ -71,6 +74,11 @@ function AddExpense() {
 
             setError("Amount must be greater than 0.");
 
+            return;
+        }
+
+        if (formData.date > today) {
+            setError("Future dates are not allowed.");
             return;
         }
 
@@ -142,6 +150,8 @@ function AddExpense() {
 
     return (
 
+        <AppShell title="Add Expense">
+
         <div className="add-expense-page">
 
             <div className="add-expense-container">
@@ -169,13 +179,7 @@ function AddExpense() {
                     </div>
 
 
-                    <Link
-                        to="/expenses"
-                        className="back-btn"
-                    >
-                        <ArrowLeftIcon />
-                        Back to Expenses
-                    </Link>
+                   
 
                 </div>
 
@@ -358,6 +362,7 @@ function AddExpense() {
                                         type="date"
                                         name="date"
                                         value={formData.date}
+                                        max={today}
                                         onChange={handleChange}
                                     />
 
@@ -466,8 +471,6 @@ function AddExpense() {
                                 disabled={loading}
                             >
 
-                                <CheckIcon />
-
                                 {loading
                                     ? "Saving..."
                                     : "Save Expense"
@@ -484,6 +487,8 @@ function AddExpense() {
             </div>
 
         </div>
+
+    </AppShell>
 
     );
 

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Expense from "./pages/Expense";
 import "./App.css";
 import Login from "./pages/Login";
@@ -7,51 +7,60 @@ import EditExpense from "./pages/EditExpense";
 import Dashboard from "./pages/Dashboard";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-
+import { ThemeProvider } from "./ThemeContext";
 
 function App() {
   return (
-    <BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
 
-      <Routes>
+        <Routes>
 
-        <Route
-          path="/expenses"
-          element={<Expense />}
-        />
+          <Route
+            path="/expenses"
+            element={<Expense />}
+          />
 
-        <Route
-          path="/login"
-          element={<Login />}
-        />
+          <Route
+            path="/login"
+            element={<Login />}
+          />
 
-        <Route
-          path="/expenses/add"
-          element={<AddExpense />}
-        />
+          <Route
+            path="/expenses/add"
+            element={<AddExpense />}
+          />
 
-        <Route
-          path="/expenses/edit/:id"
-          element={<EditExpense />}
-        />
-        <Route
-          path="/dashboard"
-          element={<Dashboard />}
-        />
+          <Route
+            path="/expenses/edit/:id"
+            element={<EditExpense />}
+          />
 
-        <Route
-          path="/register"
-          element={<Register />}
-        />
+          <Route
+            path="/edit/:id"
+            element={<EditExpense />}
+          />
+          <Route
+            path="/dashboard"
+            element={<Dashboard />}
+          />
 
-        <Route
-          path="/profile"
-          element={<Profile />}
-        />
+          <Route
+            path="/register"
+            element={<Register />}
+          />
 
-      </Routes>
+          <Route
+            path="/profile"
+            element={<Profile />}
+          />
 
-    </BrowserRouter>
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+        </Routes>
+
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

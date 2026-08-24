@@ -119,6 +119,7 @@ function Register() {
     return (
         <div className="auth-page">
 
+
             <div className="auth-glow auth-glow-one"></div>
             <div className="auth-glow auth-glow-two"></div>
 

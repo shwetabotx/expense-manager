@@ -16,6 +16,7 @@ import {
 } from "../services/profileService";
 
 import "./Profile.css";
+import AppShell from "../components/AppShell";
 
 
 function Profile() {
@@ -331,23 +332,9 @@ function Profile() {
 
     return (
 
+        <AppShell title="Profile & Budget">
+
         <div className="profile-page">
-
-
-            {/* Back */}
-
-            <button
-                type="button"
-                className="profile-back-btn"
-                onClick={() => navigate("/dashboard")}
-            >
-
-                <ArrowLeftIcon />
-
-                Back to Dashboard
-
-            </button>
-
 
             {/* Header */}
 
@@ -772,6 +759,8 @@ function Profile() {
 
 
         </div>
+
+    </AppShell>
 
     );
 

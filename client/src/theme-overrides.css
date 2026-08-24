@@ -1,0 +1,465 @@
+/* Shared visual system: applies the reference dashboard style consistently to every page. */
+
+.dashboard,
+.expenses-page,
+.add-expense-page,
+.edit-expense-page,
+.profile-page,
+.auth-page {
+    color: var(--text);
+    background:
+        radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 32%),
+        radial-gradient(circle at 95% 100%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 34%),
+        var(--page-bg) !important;
+}
+
+.dashboard h1,
+.expenses-page h1,
+.add-expense-page h1,
+.edit-expense-page h1,
+.profile-page h1,
+.auth-page h1,
+.dashboard h2,
+.expenses-page h2,
+.add-expense-page h2,
+.edit-expense-page h2,
+.profile-page h2,
+.auth-page h2,
+.dashboard h3,
+.expenses-page h3,
+.add-expense-page h3,
+.edit-expense-page h3,
+.profile-page h3,
+.auth-page h3 {
+    color: var(--text-heading) !important;
+}
+
+.dashboard-label,
+.expenses-label,
+.add-expense-label,
+.edit-expense-label,
+.profile-label,
+.auth-label,
+.table-label,
+.chart-label,
+.budget-label {
+    color: var(--accent) !important;
+    font-size: 15.4px !important;
+    letter-spacing: 1.8px !important;
+}
+
+.dashboard-subtitle,
+.expenses-subtitle,
+.add-expense-subtitle,
+.edit-expense-subtitle,
+.profile-subtitle,
+.auth-header p:last-child {
+    color: var(--text-muted) !important;
+    font-size: 18.7px !important;
+}
+
+.dashboard-header h1,
+.expenses-header h1,
+.add-expense-header h1,
+.edit-expense-header h1,
+.profile-header h1 {
+    font-size: 52.8px !important;
+    line-height: 1.08 !important;
+    letter-spacing: -1.2px !important;
+}
+
+.glass-card,
+.add-expense-card,
+.edit-expense-page .glass-card,
+.profile-card,
+.auth-card,
+.filters-card,
+.expenses-table-card,
+.chart-card,
+.budget-card,
+.stat-card {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.glass-card:hover,
+.add-expense-card:hover,
+.edit-expense-page .glass-card:hover,
+.profile-card:hover,
+.auth-card:hover,
+.chart-card:hover,
+.stat-card:hover {
+    box-shadow: var(--shadow) !important;
+}
+
+.dashboard .glass-card,
+.expenses-page .glass-card,
+.add-expense-page .glass-card,
+.edit-expense-page .glass-card,
+.profile-card,
+.auth-card {
+    border-radius: 18px !important;
+}
+
+.dashboard strong {
+    color: var(--accent) !important;
+}
+
+.dashboard .stat-card h2 {
+    font-size: 37.4px !important;
+}
+
+.dashboard .stat-title,
+.dashboard .stat-description,
+.dashboard .budget-remaining span,
+.dashboard .category-legend-name,
+.dashboard .category-legend-amount,
+.dashboard .chart-header p,
+.dashboard .budget-footer,
+.dashboard .dashboard-subtitle {
+    font-size: 17.6px !important;
+}
+
+.dashboard .budget-card,
+.dashboard .chart-card {
+    border-top-color: var(--accent) !important;
+}
+
+.dashboard .icon-box,
+.dashboard .section-icon,
+.dashboard .chart-icon,
+.dashboard .warning-icon,
+.expenses-page .filter-icon,
+.add-expense-page .form-heading-icon,
+.edit-expense-page .edit-form-icon,
+.profile-card-icon,
+.auth-icon {
+    background: var(--accent-light) !important;
+    color: var(--accent) !important;
+    border-color: var(--accent-border) !important;
+}
+
+.dashboard .budget-progress,
+.dashboard .budget-progress-fill {
+    border-radius: 999px !important;
+}
+
+.dashboard .budget-progress {
+    background: var(--overlay-mid) !important;
+}
+
+.dashboard .budget-progress-fill {
+    background: linear-gradient(90deg, var(--accent-strong), var(--accent)) !important;
+}
+
+.dashboard .view-expenses-btn,
+.dashboard .add-expense-btn,
+.dashboard .profile-btn,
+.dashboard .logout-btn,
+.dashboard-login-btn,
+.expenses-page .dashboard-btn,
+.expenses-page .add-expense-btn,
+.add-expense-page .save-expense-btn,
+.edit-expense-page .edit-save-btn,
+.profile-save-btn,
+.auth-submit {
+    border-color: var(--accent-border) !important;
+    background: var(--accent) !important;
+    color: #fff !important;
+}
+
+.dashboard .view-expenses-btn:hover,
+.dashboard .add-expense-btn:hover,
+.dashboard .profile-btn:hover,
+.dashboard .logout-btn:hover,
+.dashboard-login-btn:hover,
+.expenses-page .dashboard-btn:hover,
+.expenses-page .add-expense-btn:hover,
+.add-expense-page .save-expense-btn:hover,
+.edit-expense-page .edit-save-btn:hover,
+.profile-save-btn:hover,
+.auth-submit:hover {
+    background: var(--accent-strong) !important;
+}
+
+.dashboard .logout-btn,
+.expenses-page .dashboard-btn,
+.add-expense-page .cancel-btn,
+.edit-expense-page .edit-cancel-btn,
+.profile-cancel-btn,
+.back-btn,
+.back-expenses-btn,
+.clear-filters-btn {
+    background: var(--card-bg-soft) !important;
+    color: var(--text-heading) !important;
+    border-color: var(--card-border) !important;
+}
+
+.dashboard .logout-btn:hover,
+.expenses-page .dashboard-btn:hover,
+.add-expense-page .cancel-btn:hover,
+.edit-expense-page .edit-cancel-btn:hover,
+.profile-cancel-btn:hover,
+.back-btn:hover,
+.back-expenses-btn:hover,
+.clear-filters-btn:hover {
+    background: var(--accent-light) !important;
+    border-color: var(--accent-border) !important;
+}
+
+.dashboard .profile-btn,
+.dashboard .logout-btn,
+.dashboard .view-expenses-btn,
+.dashboard .add-expense-btn,
+.expenses-page .dashboard-btn,
+.expenses-page .add-expense-btn,
+.add-expense-page .back-btn,
+.add-expense-page .cancel-btn,
+.add-expense-page .save-expense-btn,
+.edit-expense-page .back-expenses-btn,
+.edit-expense-page .edit-cancel-btn,
+.edit-expense-page .edit-save-btn,
+.profile-edit-btn,
+.profile-save-btn,
+.profile-cancel-btn,
+.auth-submit {
+    font-size: 17.6px !important;
+}
+
+.dashboard .stat-tag,
+.dashboard .category-legend,
+.dashboard .expense-count,
+.expenses-page .expense-count,
+.category-badge,
+.payment-badge {
+    font-size: 15.4px !important;
+}
+
+/* Inputs and forms */
+.add-expense-page .form-group label,
+.edit-expense-page .edit-field label,
+.profile-field label,
+.auth-field label,
+.filter-field label {
+    color: var(--text-heading) !important;
+    font-size: 17.6px !important;
+}
+
+.add-expense-page .input-wrapper,
+.edit-expense-page .edit-input-wrapper,
+.edit-expense-page .edit-textarea-wrapper,
+.profile-field input,
+.auth-field input,
+.filter-field input,
+.filter-field select,
+.search-wrapper input {
+    background: var(--card-bg-soft) !important;
+    color: var(--text-heading) !important;
+    border-color: var(--card-border) !important;
+}
+
+.add-expense-page .input-wrapper input,
+.add-expense-page .input-wrapper select,
+.add-expense-page .input-wrapper textarea,
+.edit-expense-page .edit-input-wrapper input,
+.edit-expense-page .edit-input-wrapper select,
+.edit-expense-page .edit-textarea-wrapper textarea,
+.profile-field input,
+.auth-field input,
+.filter-field input,
+.filter-field select,
+.search-wrapper input {
+    font-size: 18.7px !important;
+}
+
+.add-expense-page .input-wrapper input::placeholder,
+.add-expense-page .input-wrapper textarea::placeholder,
+.auth-field input::placeholder,
+.filter-field input::placeholder,
+.search-wrapper input::placeholder {
+    color: var(--text-faint) !important;
+}
+
+.add-expense-page .input-wrapper:focus-within,
+.edit-expense-page .edit-input-wrapper:focus-within,
+.edit-expense-page .edit-textarea-wrapper:focus-within,
+.profile-field input:focus,
+.auth-field input:focus,
+.filter-field input:focus,
+.filter-field select:focus,
+.search-wrapper input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.add-expense-page .form-heading h2,
+.edit-expense-page .edit-form-header h2,
+.profile-card-header h2,
+.filters-title h2,
+.table-header h2,
+.chart-header h2,
+.budget-header h2 {
+    font-size: 27.5px !important;
+}
+
+.form-message,
+.auth-message,
+.profile-message,
+.expense-error {
+    font-size: 17.6px !important;
+}
+
+/* Expense table */
+.expenses-table th {
+    font-size: 15.4px !important;
+    color: var(--text-muted) !important;
+}
+
+.expenses-table td,
+.expense-title strong,
+.expense-title span,
+.notes-cell,
+.action-buttons button {
+    font-size: 17.6px !important;
+    color: var(--text-heading);
+}
+
+.expense-amount {
+    color: var(--amount-text) !important;
+    font-size: 18.7px !important;
+}
+
+/* Profile */
+.profile-detail span,
+.profile-detail strong,
+.profile-field small,
+.profile-card-header p,
+.financial-box span {
+    font-size: 17.6px !important;
+}
+
+.financial-box strong {
+    font-size: 33px !important;
+    color: var(--accent) !important;
+}
+
+.profile-edit-btn,
+.profile-save-btn {
+    background: rgb(3, 146, 3);
+}
+
+/* Authentication */
+.auth-card {
+    max-width: 500px !important;
+    padding: 40px !important;
+}
+
+.auth-header h1 {
+    font-size: 41.8px !important;
+}
+
+.auth-field {
+    margin-bottom: 20px !important;
+}
+
+.auth-field input {
+    height: 50px !important;
+}
+
+.auth-footer {
+    font-size: 17.6px !important;
+    color: var(--text-muted) !important;
+}
+
+.auth-footer a {
+    color: var(--accent) !important;
+}
+
+/* Recharts */
+.recharts-cartesian-axis-tick-value,
+.recharts-default-tooltip,
+.recharts-tooltip-label {
+    fill: var(--text-muted) !important;
+    color: var(--text-heading) !important;
+}
+
+.recharts-cartesian-grid line {
+    stroke: var(--card-border) !important;
+}
+
+.recharts-default-tooltip {
+    background: var(--card-bg) !important;
+    border-color: var(--card-border) !important;
+}
+
+/* Light mode: eliminate the old brown/black hard-coded surfaces. */
+[data-theme="light"] .dashboard,
+[data-theme="light"] .expenses-page,
+[data-theme="light"] .add-expense-page,
+[data-theme="light"] .edit-expense-page,
+[data-theme="light"] .profile-page,
+[data-theme="light"] .auth-page {
+    background: var(--page-bg) !important;
+}
+
+[data-theme="light"] .dashboard::-webkit-scrollbar-track,
+[data-theme="light"] .table-wrapper::-webkit-scrollbar-track {
+    background: var(--page-bg-2) !important;
+}
+
+[data-theme="light"] .profile-field input,
+[data-theme="light"] .auth-field input,
+[data-theme="light"] .filter-field input,
+[data-theme="light"] .filter-field select {
+    color-scheme: light;
+}
+
+[data-theme="dark"] .dashboard,
+[data-theme="dark"] .expenses-page,
+[data-theme="dark"] .add-expense-page,
+[data-theme="dark"] .edit-expense-page,
+[data-theme="dark"] .profile-page,
+[data-theme="dark"] .auth-page {
+    background: var(--page-bg) !important;
+}
+
+@media (max-width: 700px) {
+    .dashboard-header h1,
+    .expenses-header h1,
+    .add-expense-header h1,
+    .edit-expense-header h1,
+    .profile-header h1 {
+        font-size: 42.9px !important;
+    }
+
+    .dashboard-subtitle,
+    .expenses-subtitle,
+    .add-expense-subtitle,
+    .edit-expense-subtitle,
+    .profile-subtitle,
+    .auth-header p:last-child {
+        font-size: 17.6px !important;
+    }
+
+    .theme-toggle-btn {
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-header h1,
+    .expenses-header h1,
+    .add-expense-header h1,
+    .edit-expense-header h1,
+    .profile-header h1,
+    .auth-header h1 {
+        font-size: 37.4px !important;
+    }
+
+    .auth-card {
+        padding: 28px 22px !important;
+    }
+}

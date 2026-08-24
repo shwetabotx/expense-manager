@@ -7,20 +7,20 @@
 
     padding: 35px 45px 60px;
 
-    color: #f1f5e9;
+    color: var(--text-heading);
 
     background:
         radial-gradient(
             circle at 5% 5%,
-            rgba(126, 143, 78, 0.18),
+            var(--accent-bg),
             transparent 32%
         ),
         radial-gradient(
             circle at 95% 90%,
-            rgba(91, 105, 53, 0.15),
+            var(--overlay-soft),
             transparent 35%
         ),
-        #11150d;
+        var(--page-bg-1);
 }
 
 .add-expense-container {
@@ -40,12 +40,18 @@
     margin-bottom: 30px;
 }
 
+.add-expense-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .add-expense-label {
     margin: 0 0 8px;
 
-    color: #9da987;
+    color: var(--accent);
 
-    font-size: 11px;
+    font-size: 14.3px;
     font-weight: 700;
 
     letter-spacing: 2px;
@@ -54,16 +60,16 @@
 .add-expense-header h1 {
     margin: 0;
 
-    font-size: 38px;
+    font-size: 48.4px;
     font-weight: 700;
 }
 
 .add-expense-subtitle {
     margin: 8px 0 0;
 
-    color: #89927a;
+    color: var(--text-muted);
 
-    font-size: 14px;
+    font-size: 17.6px;
 }
 
 
@@ -84,24 +90,23 @@
 
     text-decoration: none;
 
-    color: #bfc8ac;
+    color: var(--tc-cac1aa);
 
     background:
-        rgba(255, 255, 255, 0.045);
+        var(--overlay-mid);
 
     border:
-        1px solid rgba(190, 205, 150, 0.10);
+        1px solid var(--border-cream);
 
-    backdrop-filter: blur(12px);
 
     transition: 0.25s ease;
 }
 
 .back-btn:hover {
-    color: #f1f5e9;
+    color: var(--text-heading);
 
     background:
-        rgba(126, 143, 78, 0.12);
+        var(--accent-bg);
 
     transform: translateY(-2px);
 }
@@ -116,24 +121,21 @@
 .add-expense-card {
     padding: 32px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.075),
-            rgba(255, 255, 255, 0.025)
-        );
+    background: var(--card-bg);
 
-    border:
-        1px solid rgba(190, 205, 150, 0.11);
+    border: 2px solid var(--card-border);
+    border-top: 4px solid var(--accent);
 
-    border-radius: 24px;
+    border-radius: 16px;
 
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
 
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.add-expense-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.4);
 }
 
 
@@ -151,7 +153,7 @@
     margin-bottom: 25px;
 
     border-bottom:
-        1px solid rgba(190, 205, 150, 0.07);
+        1px solid rgba(210, 191, 145, 0.07);
 }
 
 .form-heading-icon {
@@ -165,13 +167,13 @@
 
     border-radius: 15px;
 
-    color: #b3c27e;
+    color: var(--accent);
 
     background:
-        rgba(126, 143, 78, 0.12);
+        var(--accent-bg);
 
     border:
-        1px solid rgba(190, 205, 150, 0.09);
+        1px solid var(--border-cream);
 }
 
 .form-heading-icon svg {
@@ -181,9 +183,9 @@
 .form-heading p {
     margin: 0 0 4px;
 
-    color: #7d8869;
+    color: var(--text-muted);
 
-    font-size: 10px;
+    font-size: 13.2px;
     font-weight: 700;
 
     letter-spacing: 1.5px;
@@ -192,7 +194,7 @@
 .form-heading h2 {
     margin: 0;
 
-    font-size: 21px;
+    font-size: 26.4px;
 }
 
 
@@ -207,9 +209,9 @@
 
     margin-bottom: 8px;
 
-    color: #aeb7a0;
+    color: var(--tc-b9b29e);
 
-    font-size: 20px;
+    font-size: 25.3px;
     font-weight: 600;
 }
 
@@ -227,10 +229,10 @@
     border-radius: 13px;
 
     background:
-        rgba(255, 255, 255, 0.035);
+        var(--overlay-softer);
 
     border:
-        1px solid rgba(190, 205, 150, 0.09);
+        1px solid var(--border-cream);
 
     transition:
         border-color 0.2s ease,
@@ -240,13 +242,13 @@
 
 .input-wrapper:focus-within {
     border-color:
-        rgba(155, 174, 100, 0.45);
+        var(--accent-border);
 
     background:
-        rgba(126, 143, 78, 0.045);
+        rgba(148, 126, 73, 0.045);
 
     box-shadow:
-        0 0 0 3px rgba(126, 143, 78, 0.07);
+        0 0 0 3px rgba(148, 126, 73, 0.07);
 }
 
 .input-wrapper > svg {
@@ -255,7 +257,7 @@
 
     flex-shrink: 0;
 
-    color: #71804f;
+    color: var(--accent);
 }
 
 .input-wrapper input,
@@ -268,11 +270,11 @@
 
     background: transparent;
 
-    color: #edf1e8;
+    color: var(--text-heading);
 
     font-family: inherit;
 
-    font-size: 13px;
+    font-size: 16.5px;
 }
 
 .input-wrapper input {
@@ -295,16 +297,16 @@
 
 .input-wrapper input::placeholder,
 .input-wrapper textarea::placeholder {
-    color: #646d59;
+    color: var(--text-muted);
 }
 
 
 /* Select */
 
 .input-wrapper select option {
-    background: #1b2113;
+    background: var(--card-bg);
 
-    color: #edf1e8;
+    color: var(--text-heading);
 }
 
 
@@ -341,11 +343,11 @@
 
     border-radius: 12px;
 
-    font-size: 13px;
+    font-size: 16.5px;
 }
 
 .error-message {
-    color: #d9a19c;
+    color: var(--tc-d9a19c);
 
     background:
         rgba(170, 70, 65, 0.09);
@@ -355,13 +357,13 @@
 }
 
 .success-message {
-    color: #b8ca91;
+    color: var(--tc-cfbc8c);
 
     background:
-        rgba(126, 143, 78, 0.10);
+        rgba(148, 126, 73, 0.10);
 
     border:
-        1px solid rgba(190, 205, 150, 0.10);
+        1px solid var(--border-cream);
 }
 
 .success-message svg {
@@ -398,7 +400,7 @@
 
     font-family: inherit;
 
-    font-size: 13px;
+    font-size: 16.5px;
     font-weight: 600;
 
     cursor: pointer;
@@ -409,44 +411,44 @@
 }
 
 .cancel-btn {
-    color: #aeb7a0;
+    color: var(--tc-b9b29e);
 
     background:
-        rgba(255, 255, 255, 0.04);
+        var(--overlay-softer);
 
     border:
-        1px solid rgba(190, 205, 150, 0.09);
+        1px solid var(--border-cream);
 }
 
 .cancel-btn:hover {
-    color: #edf1e8;
+    color: var(--text-heading);
 
     background:
-        rgba(255, 255, 255, 0.07);
+        var(--overlay-mid);
 }
 
 .save-expense-btn {
-    color: #f5f7ed;
+    color: var(--text-heading);
 
     background:
         linear-gradient(
             135deg,
-            #829451,
-            #65753e
+            var(--accent),
+            var(--accent)
         );
 
     border:
-        1px solid rgba(190, 205, 150, 0.16);
+        1px solid rgba(210, 191, 145, 0.16);
 
     box-shadow:
-        0 10px 30px rgba(80, 95, 45, 0.18);
+        0 10px 30px rgba(100, 83, 41, 0.18);
 }
 
 .save-expense-btn:hover:not(:disabled) {
     transform: translateY(-2px);
 
     box-shadow:
-        0 15px 35px rgba(80, 95, 45, 0.28);
+        0 15px 35px rgba(100, 83, 41, 0.28);
 }
 
 .save-expense-btn:disabled {
@@ -501,7 +503,7 @@
     }
 
     .add-expense-header h1 {
-        font-size: 30px;
+        font-size: 37.4px;
     }
 
     .add-expense-card {

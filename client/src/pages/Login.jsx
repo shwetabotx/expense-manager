@@ -81,6 +81,7 @@ function Login() {
 
         <div className="auth-page">
 
+
             {/* Background glow */}
 
             <div className="auth-glow auth-glow-one"></div>

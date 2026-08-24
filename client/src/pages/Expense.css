@@ -13,22 +13,22 @@
     background:
         radial-gradient(
             circle at 0% 0%,
-            rgba(115, 130, 65, 0.22),
+            var(--accent-bg),
             transparent 32%
         ),
         radial-gradient(
             circle at 100% 100%,
-            rgba(75, 95, 45, 0.18),
+            var(--overlay-soft),
             transparent 35%
         ),
         linear-gradient(
             135deg,
-            #11150f 0%,
-            #181d14 50%,
-            #10140e 100%
+            var(--page-bg-1) 0%,
+            var(--page-bg-2) 50%,
+            var(--page-bg-3) 100%
         );
 
-    color: #f4f7ee;
+    color: var(--text-heading);
 }
 
 
@@ -51,31 +51,31 @@
 .expenses-label {
     margin: 0 0 8px;
 
-    font-size: 11px;
+    font-size: 14.3px;
     font-weight: 700;
     letter-spacing: 2px;
 
-    color: #a8b38c;
+    color: var(--accent);
 }
 
 
 .expenses-header h1 {
     margin: 0;
 
-    font-size: 38px;
+    font-size: 48.4px;
     line-height: 1.1;
     font-weight: 700;
 
-    color: #f4f7ee;
+    color: var(--text-heading);
 }
 
 
 .expenses-subtitle {
     margin: 10px 0 0;
 
-    color: #9da58e;
+    color: var(--text-muted);
 
-    font-size: 14px;
+    font-size: 17.6px;
 }
 
 
@@ -106,15 +106,13 @@
 
     text-decoration: none;
 
-    color: #f7faef;
+    color: var(--text-heading);
 
-    border: 1px solid rgba(210, 220, 190, 0.16);
+    border: 1px solid rgba(223, 213, 187, 0.16);
 
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.07),
+        inset 0 1px 0 var(--overlay-mid),
         0 10px 30px rgba(0, 0, 0, 0.18);
 
     transition:
@@ -126,12 +124,12 @@
 
 
 .dashboard-btn {
-    background: rgba(255, 255, 255, 0.055);
+    background: var(--overlay-soft);
 }
 
 
 .add-expense-btn {
-    background: rgba(106, 123, 57, 0.55);
+    background: rgb(3, 146, 3)
 }
 
 
@@ -139,24 +137,24 @@
 .add-expense-btn:hover {
     transform: translateY(-2px);
 
-    color: #ffffff;
+    color: var(--text-heading);
 
     border-color:
-        rgba(205, 218, 174, 0.28);
+        rgba(12, 56, 0, 0.55);
 
     box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        inset 0 1px 0 var(--overlay-strong),
         0 14px 35px rgba(0, 0, 0, 0.25);
 }
 
 
 .dashboard-btn:hover {
-    background: rgba(255, 255, 255, 0.09);
+    background: var(--overlay-mid);
 }
 
 
 .add-expense-btn:hover {
-    background: rgba(117, 137, 63, 0.75);
+    background: rgba(12, 56, 0, 0.55);
 }
 
 
@@ -173,24 +171,21 @@
     */
 
 .glass-card {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.085),
-            rgba(255, 255, 255, 0.035)
-        );
+    background: var(--card-bg);
 
-    border: 1px solid rgba(220, 230, 200, 0.12);
+    border: 2px solid var(--card-border);
+    border-top: 4px solid var(--accent);
 
-    backdrop-filter: blur(22px);
-    -webkit-backdrop-filter: blur(22px);
+    border-radius: 16px;
 
-    border-radius: 24px;
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.4);
 
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.06),
-        inset 0 -1px 0 rgba(0, 0, 0, 0.10),
-        0 20px 60px rgba(0, 0, 0, 0.20);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.4);
 }
 
 
@@ -212,14 +207,12 @@
 
     border-radius: 15px;
 
-    color: #fecaca;
+    color: var(--danger-text);
 
-    background: rgba(127, 29, 29, 0.22);
+    background: var(--danger-bg);
 
-    border: 1px solid rgba(248, 113, 113, 0.20);
+    border: 1px solid var(--danger-border);
 
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
 }
 
 
@@ -234,7 +227,7 @@
 .expense-error span {
     flex: 1;
 
-    font-size: 14px;
+    font-size: 17.6px;
 }
 
 
@@ -251,7 +244,7 @@
 
     background: rgba(255, 255, 255, 0.06);
 
-    color: #fecaca;
+    color: var(--danger-text);
 
     cursor: pointer;
 }
@@ -311,11 +304,11 @@
 
     border-radius: 14px;
 
-    background: rgba(110, 128, 58, 0.16);
+    background: rgba(134, 109, 52, 0.16);
 
-    border: 1px solid rgba(155, 174, 98, 0.13);
+    border: 1px solid var(--accent-bg);
 
-    color: #bdcc91;
+    color: var(--tc-d1bc8c);
 }
 
 
@@ -328,22 +321,22 @@
 .filters-title p {
     margin: 0 0 4px;
 
-    font-size: 10px;
+    font-size: 13.2px;
     font-weight: 700;
 
     letter-spacing: 1.5px;
 
-    color: #8e997a;
+    color: var(--text-muted);
 }
 
 
 .filters-title h2 {
     margin: 0;
 
-    font-size: 20px;
+    font-size: 25.3px;
     font-weight: 650;
 
-    color: #edf2e4;
+    color: var(--text-heading);
 }
 
 
@@ -364,13 +357,13 @@
 
     border-radius: 11px;
 
-    border: 1px solid rgba(220, 230, 200, 0.11);
+    border: 1px solid var(--border-cream);
 
-    background: rgba(255, 255, 255, 0.045);
+    background: var(--overlay-mid);
 
-    color: #aeb79d;
+    color: var(--tc-b9b19b);
 
-    font-size: 12px;
+    font-size: 15.4px;
 
     cursor: pointer;
 
@@ -388,12 +381,12 @@
 
 
 .clear-filters-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--card-border);
 
-    color: #e6ecd9;
+    color: var(--text-heading);
 
     border-color:
-        rgba(220, 230, 200, 0.20);
+        rgba(233, 223, 197, 0.20);
 }
 
 
@@ -433,11 +426,11 @@
 
 
 .filter-field label {
-    font-size: 11px;
+    font-size: 14.3px;
 
     font-weight: 600;
 
-    color: #8f9a7b;
+    color: var(--text-muted);
 }
 
 
@@ -458,19 +451,17 @@
 
     outline: none;
 
-    border: 1px solid rgba(220, 230, 200, 0.11);
+    border: 1px solid var(--border-cream);
 
     background:
-        rgba(255, 255, 255, 0.055);
+        var(--overlay-soft);
 
-    color: #edf2e4;
+    color: var(--text-heading);
 
     font-family: inherit;
 
-    font-size: 13px;
+    font-size: 16.5px;
 
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
 
     transition:
         border-color 0.2s ease,
@@ -480,30 +471,30 @@
 
 
 .filter-field input::placeholder {
-    color: #737d68;
+    color: var(--text-muted);
 }
 
 
 .filter-field input:hover,
 .filter-field select:hover {
     background:
-        rgba(255, 255, 255, 0.075);
+        var(--overlay-mid);
 
     border-color:
-        rgba(220, 230, 200, 0.17);
+        rgba(233, 223, 197, 0.17);
 }
 
 
 .filter-field input:focus,
 .filter-field select:focus {
     background:
-        rgba(255, 255, 255, 0.08);
+        var(--card-border);
 
     border-color:
-        rgba(151, 170, 91, 0.55);
+        var(--accent);
 
     box-shadow:
-        0 0 0 3px rgba(111, 132, 59, 0.12);
+        0 0 0 3px var(--accent-bg);
 }
 
 
@@ -518,8 +509,8 @@
     -webkit-appearance: none;
 
     background-image:
-        linear-gradient(45deg, transparent 50%, #8f9a7b 50%),
-        linear-gradient(135deg, #8f9a7b 50%, transparent 50%);
+        linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+        linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
 
     background-position:
         calc(100% - 17px) 18px,
@@ -536,9 +527,9 @@
 
 
 .filter-field select option {
-    background: #20271a;
+    background: var(--card-bg);
 
-    color: #edf2e4;
+    color: var(--text-heading);
 }
 
 
@@ -564,7 +555,7 @@
 
     transform: translateY(-50%);
 
-    color: #778267;
+    color: var(--text-muted);
 
     pointer-events: none;
 }
@@ -623,21 +614,21 @@
 .table-label {
     margin: 0 0 5px;
 
-    font-size: 10px;
+    font-size: 13.2px;
     font-weight: 700;
 
     letter-spacing: 1.5px;
 
-    color: #8e997a;
+    color: var(--text-muted);
 }
 
 
 .table-header h2 {
     margin: 0;
 
-    font-size: 22px;
+    font-size: 27.5px;
 
-    color: #edf2e4;
+    color: var(--text-heading);
 }
 
 
@@ -652,13 +643,13 @@
 
     border-radius: 20px;
 
-    background: rgba(111, 132, 59, 0.12);
+    background: var(--accent-bg);
 
-    border: 1px solid rgba(151, 170, 91, 0.12);
+    border: 1px solid var(--accent-bg);
 
-    color: #b8c68e;
+    color: var(--tc-cbb789);
 
-    font-size: 12px;
+    font-size: 15.4px;
 }
 
 
@@ -675,7 +666,7 @@
     scrollbar-width: thin;
 
     scrollbar-color:
-        rgba(151, 170, 91, 0.35)
+        var(--accent-border)
         transparent;
 }
 
@@ -691,7 +682,7 @@
 
 
 .table-wrapper::-webkit-scrollbar-thumb {
-    background: rgba(151, 170, 91, 0.3);
+    background: rgba(176, 148, 85, 0.3);
 
     border-radius: 20px;
 }
@@ -779,7 +770,7 @@
 
 .expenses-table thead {
     background:
-        rgba(255, 255, 255, 0.035);
+        var(--overlay-softer);
 }
 
 
@@ -800,7 +791,7 @@
 .expenses-table th {
     padding: 14px 20px;
 
-    font-size: 10px;
+    font-size: 13.2px;
 
     font-weight: 700;
 
@@ -808,13 +799,13 @@
 
     text-transform: uppercase;
 
-    color: #7f8a6e;
+    color: var(--text-muted);
 
     border-top:
-        1px solid rgba(220, 230, 200, 0.07);
+        1px solid rgba(233, 223, 197, 0.07);
 
     border-bottom:
-        1px solid rgba(220, 230, 200, 0.07);
+        1px solid rgba(233, 223, 197, 0.07);
 
     white-space: nowrap;
 }
@@ -827,12 +818,12 @@
 .expenses-table td {
     padding: 17px 20px;
 
-    font-size: 13px;
+    font-size: 16.5px;
 
-    color: #b9c0ad;
+    color: var(--tc-c2bcab);
 
     border-bottom:
-        1px solid rgba(220, 230, 200, 0.055);
+        1px solid rgba(233, 223, 197, 0.055);
 
     vertical-align: middle;
 
@@ -848,7 +839,7 @@
 
 .expenses-table tbody tr:hover {
     background:
-        rgba(255, 255, 255, 0.035);
+        var(--overlay-softer);
 }
 
 
@@ -878,9 +869,9 @@
 
     white-space: nowrap;
 
-    color: #e7ecdf;
+    color: var(--text-heading);
 
-    font-size: 13px;
+    font-size: 16.5px;
 
     font-weight: 600;
 }
@@ -891,7 +882,7 @@
     */
 
 .expense-amount {
-    color: #d4dfae;
+    color: var(--amount-text);
 
     font-weight: 650;
 
@@ -918,7 +909,7 @@
 
     border-radius: 20px;
 
-    font-size: 11px;
+    font-size: 14.3px;
 
     white-space: nowrap;
 
@@ -929,24 +920,24 @@
 
 
 .category-badge {
-    color: #c1ce99;
+    color: var(--badge-text);
 
     background:
-        rgba(112, 132, 61, 0.14);
+        rgba(138, 114, 55, 0.14);
 
     border:
-        1px solid rgba(151, 170, 91, 0.12);
+        1px solid var(--accent-bg);
 }
 
 
 .payment-badge {
-    color: #b8c1ac;
+    color: var(--badge-muted-text);
 
     background:
-        rgba(255, 255, 255, 0.055);
+        var(--overlay-soft);
 
     border:
-        1px solid rgba(220, 230, 200, 0.08);
+        1px solid rgba(233, 223, 197, 0.08);
 }
 
 
@@ -966,7 +957,7 @@
 
     white-space: nowrap;
 
-    color: #8f9885;
+    color: var(--text-muted);
 }
 
 
@@ -1011,18 +1002,18 @@
 
 
 .edit-btn {
-    color: #c3d09c;
+    color: var(--tc-d5c297);
 
     background:
-        rgba(112, 132, 61, 0.10);
+        var(--accent-bg);
 
     border:
-        1px solid rgba(151, 170, 91, 0.12);
+        1px solid var(--accent-bg);
 }
 
 
 .delete-btn {
-    color: #e98d8d;
+    color: var(--tc-e98d8d);
 
     background:
         rgba(190, 55, 55, 0.08);
@@ -1047,10 +1038,10 @@
 
 .edit-btn:hover {
     background:
-        rgba(112, 132, 61, 0.18);
+        rgba(138, 114, 55, 0.18);
 
     border-color:
-        rgba(151, 170, 91, 0.25);
+        var(--accent-border);
 }
 
 
@@ -1078,7 +1069,7 @@
 
     gap: 15px;
 
-    color: #87917b;
+    color: var(--text-muted);
 }
 
 
@@ -1089,10 +1080,10 @@
     border-radius: 50%;
 
     border:
-        3px solid rgba(220, 230, 200, 0.10);
+        3px solid var(--border-cream);
 
     border-top-color:
-        #8ea45b;
+        var(--accent);
 
     animation:
         expense-spin 0.8s linear infinite;
@@ -1140,9 +1131,9 @@
     border-radius: 18px;
 
     background:
-        rgba(112, 132, 61, 0.10);
+        var(--accent-bg);
 
-    color: #819457;
+    color: var(--accent);
 }
 
 
@@ -1155,18 +1146,18 @@
 .no-expenses h3 {
     margin: 0 0 7px;
 
-    color: #dce4d2;
+    color: var(--text-heading);
 
-    font-size: 18px;
+    font-size: 23.1px;
 }
 
 
 .no-expenses p {
     margin: 0;
 
-    color: #78826e;
+    color: var(--text-muted);
 
-    font-size: 13px;
+    font-size: 16.5px;
 }
 
 
@@ -1188,10 +1179,8 @@
     padding: 20px;
 
     background:
-        rgba(5, 8, 4, 0.70);
+        rgba(15, 14, 7, 0.70);
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 
     animation:
         delete-fade-in 0.2s ease;
@@ -1232,19 +1221,17 @@
     background:
         linear-gradient(
             145deg,
-            rgba(44, 51, 35, 0.96),
-            rgba(22, 27, 18, 0.97)
+            rgba(52, 47, 34, 0.96),
+            rgba(34, 31, 22, 0.97)
         );
 
     border:
-        1px solid rgba(220, 230, 200, 0.15);
+        1px solid rgba(233, 223, 197, 0.15);
 
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
 
     box-shadow:
         0 30px 100px rgba(0, 0, 0, 0.50),
-        inset 0 1px 0 rgba(255, 255, 255, 0.07);
+        inset 0 1px 0 var(--overlay-mid);
 
     animation:
         delete-dialog-in 0.25s ease;
@@ -1287,9 +1274,9 @@
     border-radius: 10px;
 
     background:
-        rgba(255, 255, 255, 0.055);
+        var(--overlay-soft);
 
-    color: #87917d;
+    color: var(--text-muted);
 
     cursor: pointer;
 
@@ -1307,9 +1294,9 @@
 
 .dialog-close:hover {
     background:
-        rgba(255, 255, 255, 0.10);
+        var(--overlay-strong);
 
-    color: #e9eee3;
+    color: var(--text-heading);
 }
 
 
@@ -1335,7 +1322,7 @@
     border:
         1px solid rgba(230, 100, 100, 0.14);
 
-    color: #ef9191;
+    color: var(--tc-ef9191);
 }
 
 
@@ -1352,25 +1339,25 @@
 .delete-dialog h2 {
     margin: 0 0 10px;
 
-    color: #edf2e8;
+    color: var(--text-heading);
 
-    font-size: 23px;
+    font-size: 28.6px;
 }
 
 
 .delete-dialog p {
     margin: 0;
 
-    color: #8f9887;
+    color: var(--text-muted);
 
-    font-size: 13px;
+    font-size: 16.5px;
 
     line-height: 1.7;
 }
 
 
 .delete-dialog p strong {
-    color: #dce4d0;
+    color: var(--text-heading);
 }
 
 
@@ -1403,7 +1390,7 @@
 
     font-family: inherit;
 
-    font-size: 13px;
+    font-size: 16.5px;
     font-weight: 600;
 
     cursor: pointer;
@@ -1416,13 +1403,13 @@
 
 
 .cancel-delete-btn {
-    color: #b2bba7;
+    color: var(--tc-bdb8a5);
 
     background:
-        rgba(255, 255, 255, 0.055);
+        var(--overlay-soft);
 
     border:
-        1px solid rgba(220, 230, 200, 0.10);
+        1px solid var(--border-cream);
 }
 
 
@@ -1445,7 +1432,7 @@
 
 .cancel-delete-btn:hover {
     background:
-        rgba(255, 255, 255, 0.09);
+        var(--overlay-mid);
 }
 
 
@@ -1508,7 +1495,7 @@
 
 
     .expenses-header h1 {
-        font-size: 34px;
+        font-size: 42.9px;
     }
 
 
@@ -1609,12 +1596,12 @@
 
 
     .expenses-header h1 {
-        font-size: 30px;
+        font-size: 37.4px;
     }
 
 
     .expenses-subtitle {
-        font-size: 13px;
+        font-size: 16.5px;
     }
 
 
@@ -1650,7 +1637,7 @@
 
 
     .filters-title h2 {
-        font-size: 18px;
+        font-size: 23.1px;
     }
 
 

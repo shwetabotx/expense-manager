@@ -1,0 +1,458 @@
+/* =========================================================
+   REFERENCE THEME FOR NON-DASHBOARD PAGES
+   The Dashboard is intentionally excluded from this file.
+   It remains the visual master/reference supplied by the user.
+   ========================================================= */
+
+/* Shared page canvas */
+.expenses-page,
+.add-expense-page,
+.edit-expense-page,
+.profile-page {
+  background: var(--page-bg) !important;
+  color: var(--text) !important;
+}
+
+/* Consistent page headings */
+.expenses-page .expenses-header,
+.add-expense-page .add-expense-header,
+.edit-expense-page .edit-expense-header,
+.profile-page .profile-header {
+  margin-bottom: 26px !important;
+}
+
+.expenses-page .expenses-label,
+.add-expense-page .add-expense-label,
+.edit-expense-page .edit-expense-label,
+.profile-page .profile-label {
+  color: var(--accent) !important;
+  font-size: 14.3px !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.7px !important;
+}
+
+.expenses-page .expenses-header h1,
+.add-expense-page .add-expense-header h1,
+.edit-expense-page .edit-expense-header h1,
+.profile-page .profile-header h1 {
+  color: var(--text-heading) !important;
+  font-size: 39.6px !important;
+  line-height: 1.12 !important;
+  letter-spacing: -.8px !important;
+  font-weight: 800 !important;
+}
+
+.expenses-page .expenses-subtitle,
+.add-expense-page .add-expense-subtitle,
+.edit-expense-page .edit-expense-subtitle,
+.profile-page .profile-subtitle {
+  color: var(--text-muted) !important;
+  font-size: 17.6px !important;
+  line-height: 1.5 !important;
+}
+
+/* Buttons */
+.expenses-page .dashboard-btn,
+.expenses-page .add-expense-btn,
+.add-expense-page .back-btn,
+.add-expense-page .save-expense-btn,
+.add-expense-page .cancel-btn,
+.edit-expense-page .back-expenses-btn,
+.edit-expense-page .edit-save-btn,
+.edit-expense-page .edit-cancel-btn,
+.profile-page .profile-edit-btn,
+.profile-page .profile-save-btn,
+.profile-page .profile-cancel-btn {
+  min-height: 46px !important;
+  border-radius: 13px !important;
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease !important;
+}
+
+.expenses-page .dashboard-btn,
+.add-expense-page .back-btn,
+.edit-expense-page .back-expenses-btn,
+.profile-page .profile-cancel-btn {
+  color: var(--text-heading) !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.expenses-page .add-expense-btn,
+.add-expense-page .save-expense-btn,
+.edit-expense-page .edit-save-btn,
+.profile-page .profile-edit-btn,
+.profile-page .profile-save-btn {
+  color: #fff !important;
+  background: var(--accent) !important;
+  border: 1px solid var(--accent) !important;
+  box-shadow: 0 9px 22px color-mix(in srgb, var(--accent) 20%, transparent) !important;
+}
+
+.expenses-page .dashboard-btn:hover,
+.expenses-page .add-expense-btn:hover,
+.add-expense-page .back-btn:hover,
+.add-expense-page .save-expense-btn:hover,
+.add-expense-page .cancel-btn:hover,
+.edit-expense-page .back-expenses-btn:hover,
+.edit-expense-page .edit-save-btn:hover,
+.edit-expense-page .edit-cancel-btn:hover,
+.profile-page .profile-edit-btn:hover,
+.profile-page .profile-save-btn:hover,
+.profile-page .profile-cancel-btn:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* Cards: same quiet white/green treatment as the reference dashboard */
+.expenses-page .glass-card,
+.add-expense-page .add-expense-card,
+.edit-expense-page .glass-card,
+.profile-page .profile-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-top: 1px solid var(--card-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--shadow-sm) !important;
+}
+
+.expenses-page .glass-card:hover,
+.add-expense-page .add-expense-card:hover,
+.edit-expense-page .glass-card:hover,
+.profile-page .profile-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow) !important;
+}
+
+/* Icons */
+.expenses-page .filter-icon,
+.add-expense-page .form-heading-icon,
+.edit-expense-page .edit-form-icon,
+.profile-page .profile-card-icon {
+  background: var(--accent-light) !important;
+  color: var(--accent) !important;
+  border: 1px solid var(--accent-border) !important;
+}
+
+/* Expense filters */
+.expenses-page .filters-card {
+  padding: 22px !important;
+  margin-bottom: 22px !important;
+}
+
+.expenses-page .filters-title h2,
+.expenses-page .table-header h2,
+.add-expense-page .form-heading h2,
+.edit-expense-page .edit-form-header h2,
+.profile-page .profile-card-header h2 {
+  color: var(--text-heading) !important;
+  font-size: 23.1px !important;
+  font-weight: 800 !important;
+}
+
+.expenses-page .filters-title p,
+.expenses-page .filter-field label,
+.expenses-page .table-label,
+.expenses-page .expense-meta,
+.profile-page .profile-card-header p {
+  color: var(--text-muted) !important;
+}
+
+.expenses-page .search-wrapper,
+.expenses-page .filter-field input,
+.expenses-page .filter-field select,
+.add-expense-page input,
+.add-expense-page select,
+.add-expense-page textarea,
+.edit-expense-page input,
+.edit-expense-page select,
+.edit-expense-page textarea,
+.profile-page input,
+.profile-page select,
+.profile-page textarea {
+  background: var(--card-bg-soft) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 12px !important;
+  font-size: 17.6px !important;
+}
+
+.expenses-page .search-wrapper:focus-within,
+.expenses-page .filter-field input:focus,
+.expenses-page .filter-field select:focus,
+.add-expense-page input:focus,
+.add-expense-page select:focus,
+.add-expense-page textarea:focus,
+.edit-expense-page input:focus,
+.edit-expense-page select:focus,
+.edit-expense-page textarea:focus,
+.profile-page input:focus,
+.profile-page select:focus,
+.profile-page textarea:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+  outline: none !important;
+}
+
+.expenses-page .clear-filters-btn {
+  background: var(--card-bg) !important;
+  color: var(--text-heading) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 12px !important;
+  font-size: 16.5px !important;
+}
+
+/* Expense table */
+.expenses-page .expenses-table-card {
+  overflow: hidden;
+}
+
+.expenses-page .table-header {
+  padding: 22px 22px 18px !important;
+  border-bottom: 1px solid var(--card-border) !important;
+}
+
+.expenses-page .expenses-table th {
+  color: var(--text-muted) !important;
+  background: var(--card-bg-soft) !important;
+  font-size: 14.3px !important;
+  font-weight: 800 !important;
+  letter-spacing: .3px !important;
+}
+
+.expenses-page .expenses-table td {
+  color: var(--text) !important;
+  font-size: 16.5px !important;
+  border-color: var(--card-border) !important;
+}
+
+.expenses-page .expense-title strong,
+.expenses-page .expense-title span,
+.expenses-page .notes-cell {
+  color: var(--text-heading) !important;
+  font-size: 16.5px !important;
+}
+
+.expenses-page .expense-amount {
+  color: var(--accent-strong) !important;
+  font-size: 17.6px !important;
+  font-weight: 800 !important;
+}
+
+/* Forms */
+.add-expense-page .add-expense-container,
+.edit-expense-page .edit-expense-container {
+  max-width: 980px !important;
+  margin: 0 auto !important;
+}
+
+.add-expense-page .add-expense-card,
+.edit-expense-page .edit-form-card {
+  padding: 28px !important;
+}
+
+.add-expense-page .form-heading,
+.edit-expense-page .edit-form-header {
+  border-color: var(--card-border) !important;
+}
+
+.add-expense-page .form-heading p,
+.edit-expense-page .edit-form-header p,
+.add-expense-page .form-group label,
+.edit-expense-page .edit-field label {
+  color: var(--text-muted) !important;
+}
+
+.add-expense-page .form-group label,
+.edit-expense-page .edit-field label,
+.profile-page .profile-field label {
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+}
+
+.add-expense-page .form-message,
+.edit-expense-page .edit-expense-error,
+.profile-page .profile-message {
+  border-radius: 12px !important;
+  font-size: 16.5px !important;
+}
+
+/* Profile */
+.profile-page {
+  padding-top: 34px !important;
+}
+
+.profile-page .profile-top-row {
+  margin-bottom: 20px !important;
+}
+
+.profile-page .profile-grid {
+  gap: 22px !important;
+}
+
+.profile-page .profile-card {
+  padding: 25px !important;
+}
+
+.profile-page .profile-detail {
+  padding: 15px 0 !important;
+  border-color: var(--card-border) !important;
+}
+
+.profile-page .profile-detail span {
+  color: var(--text-muted) !important;
+  font-size: 16.5px !important;
+}
+
+.profile-page .profile-detail strong {
+  color: var(--text-heading) !important;
+  font-size: 17.6px !important;
+}
+
+.profile-page .financial-box {
+  background: var(--card-bg-soft) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 14px !important;
+}
+
+.profile-page .financial-box strong {
+  color: var(--accent) !important;
+  font-size: 28.6px !important;
+}
+
+/* Auth pages use the same design language, but without the dashboard shell */
+.auth-page {
+  background:
+    radial-gradient(circle at 10% 5%, color-mix(in srgb, var(--accent) 11%, transparent), transparent 32%),
+    radial-gradient(circle at 90% 95%, color-mix(in srgb, var(--accent) 8%, transparent), transparent 34%),
+    var(--page-bg) !important;
+  color: var(--text) !important;
+}
+
+.auth-page .auth-card {
+  max-width: 470px !important;
+  min-height: auto !important;
+  height: auto !important;
+  padding: 34px !important;
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-top: 4px solid var(--accent) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--shadow) !important;
+}
+
+.auth-page .auth-icon {
+  background: var(--accent-light) !important;
+  color: var(--accent) !important;
+  border-color: var(--accent-border) !important;
+}
+
+.auth-page .auth-label {
+  color: var(--accent) !important;
+  font-size: 14.3px !important;
+}
+
+.auth-page .auth-header h1 {
+  color: var(--text-heading) !important;
+  font-size: 37.4px !important;
+  font-weight: 800 !important;
+}
+
+.auth-page .auth-header p,
+.auth-page .auth-field label,
+.auth-page .auth-links,
+.auth-page .auth-footer {
+  color: var(--text-muted) !important;
+}
+
+.auth-page .auth-field label {
+  font-size: 16.5px !important;
+  font-weight: 700 !important;
+}
+
+.auth-page .auth-field input {
+  height: 48px !important;
+  background: var(--card-bg-soft) !important;
+  color: var(--text-heading) !important;
+  border-color: var(--card-border) !important;
+  border-radius: 12px !important;
+  font-size: 17.6px !important;
+}
+
+.auth-page .auth-field input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px var(--accent-light) !important;
+}
+
+.auth-page button[type="submit"],
+.auth-page .auth-submit-btn,
+.auth-page .login-btn,
+.auth-page .register-btn {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+  border-radius: 12px !important;
+  min-height: 48px !important;
+  font-size: 17.6px !important;
+  font-weight: 800 !important;
+}
+
+.auth-page a {
+  color: var(--accent-strong) !important;
+}
+
+/* Dark mode: no hard-coded white surfaces on the non-dashboard pages */
+[data-theme="dark"] .finance-sidebar-tip {
+  box-shadow: 0 18px 40px rgba(0,0,0,.28);
+}
+
+[data-theme="dark"] .expenses-page .expenses-table th {
+  background: var(--card-bg-soft) !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .expenses-page .expenses-header,
+  .add-expense-page .add-expense-header,
+  .edit-expense-page .edit-expense-header,
+  .profile-page .profile-header {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+    gap: 18px !important;
+  }
+
+  .expenses-page .expenses-actions,
+  .add-expense-page .add-expense-header-actions,
+  .edit-expense-page .edit-expense-header-actions {
+    width: 100%;
+  }
+
+  .profile-page .profile-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .expenses-page .expenses-header h1,
+  .add-expense-page .add-expense-header h1,
+  .edit-expense-page .edit-expense-header h1,
+  .profile-page .profile-header h1 {
+    font-size: 34.1px !important;
+  }
+
+  .add-expense-page .add-expense-card,
+  .edit-expense-page .edit-form-card,
+  .profile-page .profile-card,
+  .expenses-page .filters-card {
+    padding: 20px !important;
+  }
+
+  .auth-page {
+    padding: 18px !important;
+  }
+
+  .auth-page .auth-card {
+    padding: 26px 21px !important;
+  }
+}

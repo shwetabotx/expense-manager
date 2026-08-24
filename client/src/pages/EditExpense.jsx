@@ -18,9 +18,13 @@ import {
 } from "../services/expenseService";
 
 import "./EditExpense.css";
+import AppShell from "../components/AppShell";
+import ThemeToggle from "../components/ThemeToggle";
 
 
 function EditExpense() {
+
+    const today = new Date().toISOString().split("T")[0];
 
     const { id } = useParams();
     const navigate = useNavigate();
@@ -51,6 +55,12 @@ function EditExpense() {
 
             try {
 
+                if (!id || id === "undefined" || id === "null") {
+                    setError("The expense could not be opened because its ID is missing.");
+                    setLoading(false);
+                    return;
+                }
+
                 const token = localStorage.getItem("token");
 
                 if (!token) {
@@ -59,11 +69,12 @@ function EditExpense() {
                     return;
                 }
 
-
                 const response = await getExpenseById(id, token);
+                const expense = response?.data?.data || response?.data;
 
-                const expense = response.data.data;
-
+                if (!expense) {
+                    throw new Error("Expense not found.");
+                }
 
                 setFormData({
                     title: expense.title,
@@ -210,21 +221,14 @@ function EditExpense() {
     if (loading) {
 
         return (
-
-            <div className="edit-expense-page">
-
-                <div className="edit-loading glass-card">
-
-                    <div className="loading-spinner"></div>
-
-                    <p>
-                        Loading expense...
-                    </p>
-
+            <AppShell title="Edit Expense">
+                <div className="edit-expense-page">
+                    <div className="edit-loading glass-card">
+                        <div className="loading-spinner"></div>
+                        <p>Loading expense...</p>
+                    </div>
                 </div>
-
-            </div>
-
+            </AppShell>
         );
 
     }
@@ -235,6 +239,8 @@ function EditExpense() {
 
 
     return (
+
+        <AppShell title="Edit Expense">
 
         <div className="edit-expense-page">
 
@@ -260,19 +266,25 @@ function EditExpense() {
                 </div>
 
 
-                <button
-                    type="button"
-                    className="back-expenses-btn"
-                    onClick={() => navigate("/expenses")}
-                >
+                <div className="edit-expense-header-actions">
 
-                    <ArrowLeftIcon />
+                    <ThemeToggle />
 
-                    <span>
-                        Back to Transactions
-                    </span>
+                    <button
+                        type="button"
+                        className="back-expenses-btn"
+                        onClick={() => navigate("/expenses")}
+                    >
 
-                </button>
+                        <ArrowLeftIcon />
+
+                        <span>
+                            Back to Transactions
+                        </span>
+
+                    </button>
+
+                </div>
 
             </div>
 
@@ -456,6 +468,7 @@ function EditExpense() {
                                     type="date"
                                     name="date"
                                     value={formData.date}
+                                    max={today}
                                     onChange={handleChange}
                                     disabled={saving}
                                 />
@@ -593,6 +606,8 @@ function EditExpense() {
 
 
         </div>
+
+    </AppShell>
 
     );
 
